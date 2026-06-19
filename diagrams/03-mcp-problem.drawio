@@ -1,0 +1,40 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="MCP problem" id="mcp-problem">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="650" pageHeight="450" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Без стандарта: N×M интеграций" style="text;html=1;fontSize=16;fontStyle=1;align=center" vertex="1" parent="1">
+          <mxGeometry x="180" y="10" width="290" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mA" value="Модель A" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mB" value="Модель B" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1">
+          <mxGeometry x="60" y="190" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mC" value="Модель C" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1">
+          <mxGeometry x="60" y="300" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t1" value="Инструмент 1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00" vertex="1" parent="1">
+          <mxGeometry x="450" y="80" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t2" value="Инструмент 2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00" vertex="1" parent="1">
+          <mxGeometry x="450" y="190" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t3" value="Инструмент 3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00" vertex="1" parent="1">
+          <mxGeometry x="450" y="300" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="eA1" style="html=1;endArrow=block" edge="1" parent="1" source="mA" target="t1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="eA2" style="html=1;endArrow=block" edge="1" parent="1" source="mA" target="t2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="eA3" style="html=1;endArrow=block" edge="1" parent="1" source="mA" target="t3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="eB1" style="html=1;endArrow=block" edge="1" parent="1" source="mB" target="t1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="eB2" style="html=1;endArrow=block" edge="1" parent="1" source="mB" target="t2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="eB3" style="html=1;endArrow=block" edge="1" parent="1" source="mB" target="t3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="eC1" style="html=1;endArrow=block" edge="1" parent="1" source="mC" target="t1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="eC2" style="html=1;endArrow=block" edge="1" parent="1" source="mC" target="t2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="eC3" style="html=1;endArrow=block" edge="1" parent="1" source="mC" target="t3"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

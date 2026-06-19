@@ -1,0 +1,22 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="AI-ML-DL" id="ai-ml-dl">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="600" pageHeight="450" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ai" value="AI — искусственный интеллект&#10;(любое 'умное' поведение компьютера)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=top;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="520" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="ml" value="ML — машинное обучение&#10;(правила выводятся из примеров)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=top;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="90" y="100" width="420" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="dl" value="Deep Learning — глубокое обучение&#10;(многослойные нейросети)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;verticalAlign=top;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="140" y="160" width="320" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="llm" value="LLM&#10;(большие языковые модели)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="200" y="225" width="200" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

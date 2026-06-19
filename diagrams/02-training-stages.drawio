@@ -1,0 +1,28 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="training-stages" id="training-stages">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="820" pageHeight="320" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Этапы обучения LLM" style="text;html=1;fontSize=16;fontStyle=1;align=center;verticalAlign=middle" vertex="1" parent="1">
+          <mxGeometry x="220" y="20" width="380" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="s1" value="1. Pretraining&#10;(огромный корпус)&#10;→ base model" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1">
+          <mxGeometry x="40" y="130" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" value="2. Fine-tuning&#10;(instruction tuning)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" vertex="1" parent="1">
+          <mxGeometry x="300" y="130" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" value="3. RLHF&#10;(оценки людей)&#10;→ ассистент" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00" vertex="1" parent="1">
+          <mxGeometry x="560" y="130" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="s1" target="s2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="s2" target="s3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

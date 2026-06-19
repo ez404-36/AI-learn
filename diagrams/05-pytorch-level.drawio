@@ -1,0 +1,14 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="PyTorch Level" id="pytorchlvl05">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="700" pageHeight="420" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="PyTorch — уровнем ниже" style="text;html=1;align=center;verticalAlign=middle;fontSize=18;fontStyle=1" vertex="1" parent="1"><mxGeometry x="200" y="20" width="300" height="30" as="geometry" /></mxCell>
+        <mxCell id="top" value="Уровень приложений:&#10;LangChain / LangGraph&#10;(используют готовые LLM)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1"><mxGeometry x="180" y="90" width="320" height="90" as="geometry" /></mxCell>
+        <mxCell id="bottom" value="Уровень моделей:&#10;PyTorch / TensorFlow&#10;(создают и обучают сети)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00" vertex="1" parent="1"><mxGeometry x="180" y="290" width="320" height="90" as="geometry" /></mxCell>
+        <mxCell id="e1" value="API к модели" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;fontSize=12" edge="1" parent="1" source="top" target="bottom"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

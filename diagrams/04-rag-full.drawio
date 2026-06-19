@@ -1,0 +1,70 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Full RAG Pipeline" id="rag-full">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Полный RAG-пайплайн" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="300" y="20" width="300" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="leftLbl" value="Индексация (заранее)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=13;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="220" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="rightLbl" value="Запрос (на каждый вопрос)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=13;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="620" y="70" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="docs" value="Документы" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1">
+          <mxGeometry x="80" y="120" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="chunks" value="Чанки" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00" vertex="1" parent="1">
+          <mxGeometry x="80" y="230" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lembed" value="Эмбеддинги" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" vertex="1" parent="1">
+          <mxGeometry x="80" y="340" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="db" value="Векторная БД" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6" vertex="1" parent="1">
+          <mxGeometry x="370" y="290" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="q" value="Вопрос" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1">
+          <mxGeometry x="680" y="120" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="qembed" value="Эмбеддинг" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" vertex="1" parent="1">
+          <mxGeometry x="680" y="230" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="topk" value="top-K чанки" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666" vertex="1" parent="1">
+          <mxGeometry x="680" y="400" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="llm" value="LLM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1">
+          <mxGeometry x="680" y="510" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ans" value="Ответ" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" vertex="1" parent="1">
+          <mxGeometry x="680" y="620" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="le1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="docs" target="chunks">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="le2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="chunks" target="lembed">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="le3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="lembed" target="db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="re1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="q" target="qembed">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="re2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="qembed" target="db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="re3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="db" target="topk">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="re4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="topk" target="llm">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="re5" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="llm" target="ans">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

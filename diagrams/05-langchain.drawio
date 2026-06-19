@@ -1,0 +1,22 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="LangChain Components" id="langchain05">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="760" pageHeight="560" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Компоненты LangChain" style="text;html=1;align=center;verticalAlign=middle;fontSize=18;fontStyle=1" vertex="1" parent="1"><mxGeometry x="230" y="20" width="300" height="30" as="geometry" /></mxCell>
+        <mxCell id="core" value="LangChain" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=14" vertex="1" parent="1"><mxGeometry x="300" y="250" width="160" height="70" as="geometry" /></mxCell>
+        <mxCell id="c1" value="Обёртки моделей" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1"><mxGeometry x="40" y="100" width="160" height="60" as="geometry" /></mxCell>
+        <mxCell id="c2" value="Шаблоны промптов" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00" vertex="1" parent="1"><mxGeometry x="560" y="100" width="160" height="60" as="geometry" /></mxCell>
+        <mxCell id="c3" value="Загрузчики данных" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1"><mxGeometry x="40" y="420" width="160" height="60" as="geometry" /></mxCell>
+        <mxCell id="c4" value="Интеграции с векторными БД" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00" vertex="1" parent="1"><mxGeometry x="560" y="420" width="160" height="60" as="geometry" /></mxCell>
+        <mxCell id="c5" value="Готовые агенты" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1"><mxGeometry x="300" y="450" width="160" height="60" as="geometry" /></mxCell>
+        <mxCell id="e1" style="edgeStyle=none;html=1;endArrow=none" edge="1" parent="1" source="core" target="c1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" style="edgeStyle=none;html=1;endArrow=none" edge="1" parent="1" source="core" target="c2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" style="edgeStyle=none;html=1;endArrow=none" edge="1" parent="1" source="core" target="c3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" style="edgeStyle=none;html=1;endArrow=none" edge="1" parent="1" source="core" target="c4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" style="edgeStyle=none;html=1;endArrow=none" edge="1" parent="1" source="core" target="c5"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

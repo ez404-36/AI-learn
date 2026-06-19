@@ -1,0 +1,48 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="LLM to Agent" id="llm-to-agent">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="700" pageHeight="450" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="От LLM к агенту" style="text;html=1;fontSize=16;fontStyle=1;align=center" vertex="1" parent="1">
+          <mxGeometry x="240" y="10" width="220" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="llm" value="LLM&#10;только текст, заперта" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1">
+          <mxGeometry x="60" y="190" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="agent" value="Агент" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1">
+          <mxGeometry x="400" y="190" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="tsearch" value="Поиск" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00" vertex="1" parent="1">
+          <mxGeometry x="580" y="100" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="tapi" value="API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00" vertex="1" parent="1">
+          <mxGeometry x="580" y="200" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="tfiles" value="Файлы" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00" vertex="1" parent="1">
+          <mxGeometry x="580" y="300" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="agent" target="tsearch">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="agent" target="tapi">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="agent" target="tfiles">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eloop" value="цикл" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;rounded=1" edge="1" parent="1" source="agent" target="agent">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="470" y="150" />
+              <mxPoint x="400" y="150" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="emid" value="+ инструменты" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="llm" target="agent">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

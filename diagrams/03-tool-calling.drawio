@@ -1,0 +1,40 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Tool calling" id="tool-calling">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="500" pageHeight="560" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Tool calling по шагам" style="text;html=1;fontSize=16;fontStyle=1;align=center" vertex="1" parent="1">
+          <mxGeometry x="130" y="10" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="s1" value="1. Пользователь:&#10;'Погода в Москве?'" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1">
+          <mxGeometry x="150" y="60" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" value="2. LLM генерирует вызов:&#10;{tool: get_weather, city: Москва}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1">
+          <mxGeometry x="130" y="160" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" value="3. Рантайм выполняет&#10;функцию" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00" vertex="1" parent="1">
+          <mxGeometry x="150" y="260" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s4" value="4. Результат: +5°C" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" vertex="1" parent="1">
+          <mxGeometry x="150" y="360" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s5" value="5. LLM формулирует ответ" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1">
+          <mxGeometry x="150" y="460" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="s1" target="s2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="s2" target="s3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="s3" target="s4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="s4" target="s5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

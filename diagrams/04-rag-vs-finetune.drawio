@@ -1,0 +1,22 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="RAG vs Fine-tuning vs Context" id="rag-vs-finetune">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="700" pageHeight="350" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="RAG vs Fine-tuning vs контекст" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="150" y="20" width="400" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="rag" value="RAG&#10;факты в промпт&#10;веса НЕ меняются" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" vertex="1" parent="1">
+          <mxGeometry x="60" y="90" width="170" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="ft" value="Fine-tuning&#10;меняет веса&#10;поведение/стиль" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00" vertex="1" parent="1">
+          <mxGeometry x="270" y="90" width="170" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="ctx" value="Длинный контекст&#10;всё в промпт&#10;дорого" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1">
+          <mxGeometry x="480" y="90" width="170" height="180" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

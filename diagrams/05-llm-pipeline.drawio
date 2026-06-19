@@ -1,0 +1,21 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="LLM Pipeline" id="llmpipe05">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1050" pageHeight="300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="LLM-пайплайн (цепочка)" style="text;html=1;align=center;verticalAlign=middle;fontSize=18;fontStyle=1" vertex="1" parent="1"><mxGeometry x="370" y="20" width="300" height="30" as="geometry" /></mxCell>
+        <mxCell id="art" value="Статья" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf" vertex="1" parent="1"><mxGeometry x="30" y="110" width="150" height="60" as="geometry" /></mxCell>
+        <mxCell id="sum" value="LLM: суммаризация" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1"><mxGeometry x="230" y="110" width="160" height="60" as="geometry" /></mxCell>
+        <mxCell id="trans" value="LLM: перевод" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1"><mxGeometry x="440" y="110" width="160" height="60" as="geometry" /></mxCell>
+        <mxCell id="tweet" value="LLM: твит" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1"><mxGeometry x="650" y="110" width="160" height="60" as="geometry" /></mxCell>
+        <mxCell id="done" value="Готово" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" vertex="1" parent="1"><mxGeometry x="860" y="110" width="150" height="60" as="geometry" /></mxCell>
+        <mxCell id="note" value="выход = вход следующего" style="text;html=1;align=center;fontSize=12;fontStyle=2" vertex="1" parent="1"><mxGeometry x="370" y="210" width="300" height="20" as="geometry" /></mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="art" target="sum"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="sum" target="trans"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="trans" target="tweet"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="tweet" target="done"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -31,11 +31,11 @@
         <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="agent" target="tfiles">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="eloop" value="цикл" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;rounded=1" edge="1" parent="1" source="agent" target="agent">
+        <mxCell id="eloop" value="цикл рассуждений" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;rounded=1;exitX=0.7;exitY=0;exitDx=0;exitDy=0;entryX=0.3;entryY=0;entryDx=0;entryDy=0;fontSize=11" edge="1" parent="1" source="agent" target="agent">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="470" y="150" />
-              <mxPoint x="400" y="150" />
+              <mxPoint x="498" y="120" />
+              <mxPoint x="442" y="120" />
             </Array>
           </mxGeometry>
         </mxCell>

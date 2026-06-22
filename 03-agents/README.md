@@ -71,6 +71,22 @@
    "Сейчас в Москве +5°C, облачно."
 ```
 
+Граница «модель решает / рантайм выполняет» в коде выглядит так:
+
+```python
+from typing import Callable
+
+
+def get_weather(city: str) -> str:
+    return f"+5°C, облачно в городе {city}"
+
+
+tools: dict[str, Callable] = {"get_weather": get_weather}
+
+call: dict = {"tool": "get_weather", "args": {"city": "Москва"}}  # сгенерила LLM
+result: str = tools[call["tool"]](**call["args"])                 # выполнил рантайм
+```
+
 ![Tool calling по шагам](../diagrams/screenshots/03-tool-calling.png)
 
 > Исходник диаграммы: [`diagrams/03-tool-calling.drawio`](../diagrams/03-tool-calling.drawio)
@@ -105,6 +121,16 @@
 2. *Thought:* нужен год основания СПб → *Action:* поиск → *Observation:* 1703.
 3. *Thought:* теперь вычту → *Action:* калькулятор(1703-1147) → *Observation:* 556.
 4. *Final Answer:* «Разница составляет 556 лет».
+
+```python
+# Иллюстративный скелет ReAct-цикла (его крутит рантайм агента)
+context: str = question
+while not done:
+    thought: str = llm(context)        # Thought: что делать дальше?
+    action: dict = choose_tool(thought)  # Action: выбрать инструмент + аргументы
+    observation: str = run(action)     # Observation: результат вызова
+    context += observation             # дописали в контекст и повторяем
+```
 
 ![Цикл ReAct](../diagrams/screenshots/03-react-loop.png)
 

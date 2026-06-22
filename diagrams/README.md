@@ -48,6 +48,8 @@
 - `03-llm-to-agent.drawio` — от LLM к агенту
 - `03-tool-calling.drawio` — шаги tool calling
 - `03-react-loop.drawio` — цикл ReAct
+- `03-instruction-layers.drawio` — три слоя инструкций агента (system prompt / rules / запрос)
+- `03-skill-disclosure.drawio` — три уровня загрузки Skill (progressive disclosure)
 - `03-mcp-problem.drawio` — проблема интеграций без MCP
 - `03-mcp-architecture.drawio` — архитектура MCP
 - `03-acp-overview.drawio` — общение агентов через ACP

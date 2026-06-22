@@ -1,0 +1,49 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Skill progressive disclosure" id="skill-disclosure">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="760" pageHeight="430" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Progressive disclosure: 3 уровня загрузки Skill" style="text;html=1;fontSize=16;fontStyle=1;align=center" vertex="1" parent="1">
+          <mxGeometry x="180" y="10" width="400" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="l1" value="Уровень 1 — Метаданные&#10;name + description (~100 слов)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=middle;spacing=6;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="80" y="70" width="300" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="l1when" value="Всегда в контексте, при старте.&#10;Агент лишь знает, что навык есть&#10;и когда он уместен." style="text;html=1;fontSize=12;align=left;verticalAlign=middle;spacingLeft=4" vertex="1" parent="1">
+          <mxGeometry x="410" y="70" width="290" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="l2" value="Уровень 2 — Тело SKILL.md&#10;инструкции (&lt; 500 строк)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=middle;spacing=6;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="80" y="170" width="300" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="l2when" value="Когда агент решил, что навык&#10;подходит к задаче — читает тело&#10;и следует пошаговым инструкциям." style="text;html=1;fontSize=12;align=left;verticalAlign=middle;spacingLeft=4" vertex="1" parent="1">
+          <mxGeometry x="410" y="170" width="290" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="l3" value="Уровень 3 — Ресурсы&#10;references/ · scripts/ · assets/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;verticalAlign=middle;spacing=6;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="80" y="270" width="300" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="l3when" value="Только когда тело на них ссылается.&#10;Скрипты выполняются без чтения&#10;в контекст — объём не ограничен." style="text;html=1;fontSize=12;align=left;verticalAlign=middle;spacingLeft=4" vertex="1" parent="1">
+          <mxGeometry x="410" y="270" width="290" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#666666;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0" edge="1" parent="1" source="l1" target="l2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e23" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#666666;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0" edge="1" parent="1" source="l2" target="l3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="loadLabel" value="загрузка по мере надобности →&#10;экономия контекста" style="text;html=1;fontSize=12;fontStyle=2;align=center;horizontal=0;fontColor=#666666" vertex="1" parent="1">
+          <mxGeometry x="30" y="150" width="30" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="loadArrow" value="" style="endArrow=block;html=1;strokeColor=#666666;strokeWidth=2" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="62" y="100" as="sourcePoint" />
+            <mxPoint x="62" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="footer" value="Десятки навыков можно «установить» почти без затрат контекста: пока навык не нужен, в окне модели лежит только его описание." style="text;html=1;fontSize=12;fontStyle=2;align=center;fontColor=#666666;whiteSpace=wrap" vertex="1" parent="1">
+          <mxGeometry x="80" y="360" width="620" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

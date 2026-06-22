@@ -19,7 +19,7 @@
 |---|--------|-------|------------------|
 | 01 | [Основы](./01-foundations/README.md) | Что такое AI, ML, нейросети и как они «учатся» | AI, ML, нейросеть, обучение, параметры, inference |
 | 02 | [Большие языковые модели (LLM)](./02-llm/README.md) | Как устроена и работает LLM изнутри | токен, embedding, трансформер, контекст, промпт, fine-tuning |
-| 03 | [ИИ-агенты и протоколы](./03-agents/README.md) | Агенты, инструменты, MCP, ACP | агент, tool calling, MCP, ACP, ReAct |
+| 03 | [ИИ-агенты и протоколы](./03-agents/README.md) | Агенты, инструменты, правила, Skills, MCP, ACP | агент, tool calling, rules, Skill, MCP, ACP, ReAct |
 | 04 | [RAG](./04-rag/README.md) | Как дать модели доступ к внешним знаниям | embeddings, векторная БД, retrieval, RAG-пайплайн |
 | 05 | [Пайплайны и фреймворки](./05-pipelines-frameworks/README.md) | LLM-пайплайны, LangChain, LangGraph, PyTorch | pipeline, chain, граф, PyTorch, тензор |
 | 06 | [Глоссарий](./06-glossary/README.md) | Алфавитный словарь всех терминов | — |

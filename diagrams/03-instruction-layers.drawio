@@ -1,0 +1,37 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Instruction layers" id="instruction-layers">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="720" pageHeight="470" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Три слоя инструкций агента" style="text;html=1;fontSize=16;fontStyle=1;align=center" vertex="1" parent="1">
+          <mxGeometry x="210" y="10" width="300" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ctxLabel" value="Контекст модели" style="text;html=1;fontSize=12;fontStyle=2;align=left;fontColor=#666666" vertex="1" parent="1">
+          <mxGeometry x="60" y="58" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ctxBox" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;dashed=1" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="600" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="sys" value="System prompt&#10;(задаёт разработчик)&#10;роль и рамки агента&#10;«Ты — ассистент-программист, отвечай кратко»" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=middle;spacing=8" vertex="1" parent="1">
+          <mxGeometry x="100" y="110" width="520" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="rules" value="Правила проекта (rules)&#10;(задаёт команда / пользователь)&#10;постоянные конвенции и запреты&#10;AGENTS.md · CLAUDE.md · .cursor/rules" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=middle;spacing=8" vertex="1" parent="1">
+          <mxGeometry x="100" y="195" width="520" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="prompt" value="Запрос пользователя (prompt)&#10;(прямо сейчас)&#10;разовая задача&#10;«Добавь валидацию email в форму регистрации»" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;verticalAlign=middle;spacing=8" vertex="1" parent="1">
+          <mxGeometry x="100" y="280" width="520" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="scaleLabel" value="общее → конкретное" style="text;html=1;fontSize=12;fontStyle=2;align=center;horizontal=0;fontColor=#666666" vertex="1" parent="1">
+          <mxGeometry x="20" y="160" width="30" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow" value="" style="endArrow=block;html=1;strokeColor=#666666;strokeWidth=2" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="48" y="125" as="sourcePoint" />
+            <mxPoint x="48" y="345" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

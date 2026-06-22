@@ -16,11 +16,16 @@
         <mxCell id="ft" value="Fine-tuning" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666" vertex="1" parent="1">
           <mxGeometry x="440" y="290" width="160" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="e1" value="НЕ влезает" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="docs" target="ctx">
+        <mxCell id="e1" value="НЕ влезает" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;labelBackgroundColor=#ffffff;fontStyle=1;exitX=1;exitY=0.4;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0" edge="1" parent="1" source="docs" target="ctx">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e2" value="дорого / долго" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block" edge="1" parent="1" source="docs" target="ft">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e2" value="дорого / долго" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;labelBackgroundColor=#ffffff;fontStyle=1;exitX=1;exitY=0.85;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0" edge="1" parent="1" source="docs" target="ft">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="375" y="192" />
+              <mxPoint x="375" y="320" />
+            </Array>
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>

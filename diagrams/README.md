@@ -74,3 +74,13 @@
 - `05-pytorch-level.drawio` — уровень PyTorch
 - `05-stack-layers.drawio` — карта слоёв AI-стека
 - `05-tool-choice.drawio` — дерево выбора инструмента
+
+### 06. Адаптация и сжатие моделей
+- `06-finetune-efficient.drawio` — full fine-tuning vs LoRA vs квантизация vs дистилляция
+
+### 07. Инференс и производительность
+- `07-inference-speed.drawio` — фазы инференса (prefill/decode), KV cache, стриминг и батчинг
+
+### 08. Безопасность и надёжность
+- `08-agent-safety.drawio` — слои защиты: guardrails на входе/выходе, точки prompt injection и jailbreak
+- `08-evals.drawio` — цикл эвалов (датасет → прогон → оценка → регрессии)

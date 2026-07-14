@@ -1,0 +1,100 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="inference-speed" id="inference-speed">
+    <mxGraphModel dx="1000" dy="640" grid="1" gridSize="10" guides="1" page="1" pageWidth="1120" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="Инференс: из чего складывается скорость ответа" style="text;html=1;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="300" y="20" width="520" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- PREFILL -->
+        <mxCell id="prefill-box" value="PREFILL&#10;(обработка промпта)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="80" y="90" width="200" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="prefill-note" value="весь ввод за один проход&#10;→ быстро, параллельно" style="text;html=1;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="80" y="182" width="200" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- TTFT marker -->
+        <mxCell id="ttft" value="TTFT&#10;(до 1-го токена)" style="text;html=1;fontSize=11;fontStyle=2;align=center;fontColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="290" y="110" width="90" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- DECODE -->
+        <mxCell id="decode-box" value="DECODE (генерация)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="390" y="90" width="440" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="tok1" value="tok 1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="405" y="125" width="60" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="tok2" value="tok 2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="485" y="125" width="60" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="tok3" value="tok 3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="565" y="125" width="60" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="tokn" value="...  tok N" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="645" y="125" width="80" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="de1" value="" style="edgeStyle=none;html=1;endArrow=block;strokeColor=#82b366;" edge="1" parent="1" source="tok1" target="tok2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="de2" value="" style="edgeStyle=none;html=1;endArrow=block;strokeColor=#82b366;" edge="1" parent="1" source="tok2" target="tok3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="de3" value="" style="edgeStyle=none;html=1;endArrow=block;strokeColor=#82b366;" edge="1" parent="1" source="tok3" target="tokn"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="decode-note" value="по одному токену, последовательно → медленно (tok/s)" style="text;html=1;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="390" y="182" width="440" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="prefill-decode-edge" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#333333;" edge="1" parent="1" source="prefill-box" target="tok1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- KV CACHE -->
+        <mxCell id="kv-box" value="KV cache" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;verticalAlign=top;align=center;" vertex="1" parent="1">
+          <mxGeometry x="390" y="250" width="440" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="kv-note" value="результаты внимания для прошлых токенов сохраняются&#10;и переиспользуются → не пересчитываем контекст заново.&#10;Плата: растёт с длиной контекста и упирается в память." style="text;html=1;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="395" y="278" width="430" height="58" as="geometry"/>
+        </mxCell>
+        <mxCell id="kv-up1" value="" style="edgeStyle=none;html=1;endArrow=none;dashed=1;strokeColor=#d79b00;" edge="1" parent="1" source="kv-box" target="tok2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="kv-up2" value="" style="edgeStyle=none;html=1;endArrow=none;dashed=1;strokeColor=#d79b00;" edge="1" parent="1" source="kv-box" target="tok3"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- STREAMING -->
+        <mxCell id="stream-box" value="Стриминг → пользователю" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="860" y="110" width="200" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="stream-note" value="токены уходят по мере&#10;готовности → первые слова&#10;видны сразу (лучше UX,&#10;время генерации то же)" style="text;html=1;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="860" y="175" width="200" height="65" as="geometry"/>
+        </mxCell>
+        <mxCell id="stream-edge" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#9673a6;" edge="1" parent="1" source="decode-box" target="stream-box"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- BATCHING -->
+        <mxCell id="batch-title" value="Батчинг: одна GPU обслуживает много запросов сразу" style="text;html=1;fontSize=13;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="200" y="400" width="720" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="req1" value="запрос A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="120" y="440" width="110" height="34" as="geometry"/>
+        </mxCell>
+        <mxCell id="req2" value="запрос B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="120" y="484" width="110" height="34" as="geometry"/>
+        </mxCell>
+        <mxCell id="req3" value="запрос C" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="120" y="528" width="110" height="34" as="geometry"/>
+        </mxCell>
+        <mxCell id="gpu" value="GPU&#10;(один прогон на пакет)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="420" y="470" width="180" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="throughput" value="высокий throughput&#10;(запросов/с по всем)" style="text;html=1;fontSize=11;fontStyle=2;align=center;" vertex="1" parent="1">
+          <mxGeometry x="720" y="480" width="180" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="be1" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#82b366;" edge="1" parent="1" source="req1" target="gpu"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="be2" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#82b366;" edge="1" parent="1" source="req2" target="gpu"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="be3" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#82b366;" edge="1" parent="1" source="req3" target="gpu"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="be4" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#82b366;" edge="1" parent="1" source="gpu" target="throughput"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- KEY BALANCE -->
+        <mxCell id="balance" value="Пользователь платит за ЛАТЕНТНОСТЬ (быстрый ответ), владелец сервиса оптимизирует THROUGHPUT (много запросов). Приёмы инференса — про баланс между ними." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="140" y="600" width="840" height="60" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

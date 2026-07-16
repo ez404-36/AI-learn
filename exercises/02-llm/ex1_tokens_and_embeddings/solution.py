@@ -31,6 +31,11 @@ def nearest(query: str, phrases: list[str]) -> str:
 
 
 def main() -> None:
+    # Оффлайн-проверка cos_sim (без LM Studio):
+    assert cos_sim(np.array([1.0, 0.0]), np.array([1.0, 0.0])) == 1.0
+    assert cos_sim(np.array([1.0, 0.0]), np.array([0.0, 1.0])) == 0.0
+    assert cos_sim(np.array([1.0, 0.0]), np.array([-1.0, 0.0])) == -1.0
+
     phrases = [
         "кошка спит на диване",
         "котёнок играет с клубком",

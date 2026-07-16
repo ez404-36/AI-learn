@@ -44,6 +44,11 @@ def main() -> None:
     for s in samples:
         print(f"  - {s}")
 
+    # ask() должен возвращать непустой текст ответа при любой temperature.
+    assert a0.strip(), "пустой ответ при temperature=0"
+    assert b0.strip(), "пустой ответ при temperature=0"
+    assert all(s.strip() for s in samples), "пустой ответ при temperature=1"
+
     # Наблюдение (не жёсткий assert — модели различаются):
     # при temperature=0 ответы обычно совпадают, при 1 — чаще различаются.
     unique = len(set(samples))

@@ -2,7 +2,9 @@
 
 Опирается на §2 теории 08: guardrails — внешние проверки на ВХОДЕ (отсеять
 запрещённые запросы) и на ВЫХОДЕ (не выпустить PII/небезопасное) вокруг
-вызова модели. Они не делают модель умнее — ограничивают последствия.
+вызова модели. PII (Personally Identifiable Information — персональные
+данные: email, телефон и т.п.) — то, что нельзя случайно «утечь» в ответе
+модели. Guardrails не делают модель умнее — они ограничивают последствия.
 
 Здесь реализуем regex-фильтры и оборачиваем ими вызов LM Studio.
 
@@ -37,24 +39,49 @@ REFUSAL = "Извините, не могу помочь с этим."
 
 
 def input_blocked(text: str) -> bool:
-    """True, если во вводе есть запрещённый паттерн (регистронезависимо)."""
-    # TODO: проверить text по BLOCKED_PATTERNS (re.search, IGNORECASE)
+    """Проверить, содержит ли ввод запрещённый паттерн.
+
+    Args:
+        text: пользовательский ввод для проверки.
+
+    Returns:
+        True, если во вводе есть запрещённый паттерн (регистронезависимо).
+        Проверьте text по BLOCKED_PATTERNS (re.search, IGNORECASE).
+    """
+    # TODO
     raise NotImplementedError
 
 
 def redact_pii(text: str) -> str:
-    """Замаскировать email и телефонные номера."""
-    # TODO: заменить email на [EMAIL], последовательности из 7+ цифр на [PHONE]
+    """Замаскировать email и телефонные номера.
+
+    Args:
+        text: исходный текст.
+
+    Returns:
+        Текст с email, заменённым на [EMAIL], и последовательностями
+        из 7+ цифр, заменёнными на [PHONE].
+    """
+    # TODO
     raise NotImplementedError
 
 
 def safe_generate(user_input: str) -> str:
-    """Guardrail на входе → модель → guardrail (PII) на выходе."""
+    """Guardrail на входе → модель → guardrail (PII) на выходе.
+
+    Args:
+        user_input: реплика пользователя.
+
+    Returns:
+        REFUSAL, если input_blocked(user_input); иначе ответ модели с
+        применённым redact_pii. Вызовите модель, к ответу примените
+        redact_pii, верните результат.
+    """
     if input_blocked(user_input):
         return REFUSAL
     client = get_client()
     model = first_model_id(client)
-    # TODO: вызвать модель, к ответу применить redact_pii, вернуть
+    # TODO
     raise NotImplementedError
 
 
@@ -77,6 +104,12 @@ def main() -> None:
     assert blocked == REFUSAL
     print(f"Заблокированный ввод → {blocked}")
     print(f"Обычный ответ → {normal}")
+
+    # Ветка редактирования выхода в safe_generate тоже должна отработать:
+    # ответ непустой и не содержит "сырых" email/телефонов.
+    assert normal.strip(), "пустой ответ"
+    assert not re.search(r"[\w.+-]+@[\w-]+\.[\w.-]+", normal), normal
+    assert not re.search(r"\d{7,}", normal), normal
     print("[OK] ex1_guardrails: вход отфильтрован, выход очищен от PII.")
 
 

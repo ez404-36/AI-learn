@@ -2,8 +2,9 @@
 
 Опирается на §3 теории 06: квантизация снижает точность чисел, которыми
 записаны веса (обычно 16 бит → 8 или 4). Здесь мы вручную квантизуем
-float32-матрицу в int8 (симметричная per-tensor схема), измеряем сжатие
-и ошибку восстановления.
+float32-матрицу в int8 (симметричная per-tensor схема — один общий scale
+на весь тензор целиком, а не свой для каждой строки/канала), измеряем
+сжатие и ошибку восстановления.
 
 Задача:
   1. quantize: float32 → int8 + масштаб (scale).
@@ -17,17 +18,37 @@ import numpy as np
 
 
 def quantize(weights: np.ndarray) -> tuple[np.ndarray, float]:
-    """float32 → (int8-массив, scale).
+    """Квантизовать float32-массив в int8 (симметричная схема).
 
     Симметричная схема: scale = max(|w|) / 127; q = round(w / scale).
+
+    Args:
+        weights: исходный массив весов (float32).
+
+    Returns:
+        Кортеж (int8-массив, scale). Посчитать scale, квантизовать в int8:
+          np.abs(arr)             — модуль каждого элемента (|x|).
+          np.max(arr)             — наибольший элемент массива.
+          np.round(arr)           — округление каждого элемента до целого.
+          np.clip(arr, lo, hi)    — обрезать значения до диапазона [lo, hi].
+          arr.astype(np.int8)     — привести элементы массива к типу int8
+                                    (целое число, диапазон -128..127).
     """
-    # TODO: посчитать scale, квантизовать в int8 (np.clip до [-127, 127])
+    # TODO
     raise NotImplementedError
 
 
 def dequantize(q: np.ndarray, scale: float) -> np.ndarray:
-    """int8 + scale → приближённый float32."""
-    # TODO: вернуть q * scale
+    """Восстановить приближённый float32 из int8 + scale.
+
+    Args:
+        q: квантизованный массив (int8).
+        scale: масштаб, полученный от quantize.
+
+    Returns:
+        q * scale — приближённое восстановление исходных весов.
+    """
+    # TODO
     raise NotImplementedError
 
 
@@ -38,7 +59,9 @@ def main() -> None:
     q, scale = quantize(w)
     w_hat = dequantize(q, scale)
 
+    # arr.dtype   — тип элементов массива (например int8, float32).
     assert q.dtype == np.int8
+    # arr.nbytes  — сколько байт в памяти занимает весь массив.
     compression = w.nbytes / q.nbytes  # float32 (4 байта) → int8 (1 байт)
     max_err = float(np.max(np.abs(w - w_hat)))
 

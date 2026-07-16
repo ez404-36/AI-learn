@@ -55,7 +55,7 @@ def streaming_call(prompt: str) -> tuple[str, float, float]:
 
 def main() -> None:
     try:
-        _, block_total = blocking_call(PROMPT)
+        block_text, block_total = blocking_call(PROMPT)
         text, ttft, stream_total = streaming_call(PROMPT)
     except LMStudioUnavailableError as exc:
         print(f"[SKIP] {exc}", file=sys.stderr)
@@ -68,6 +68,11 @@ def main() -> None:
         f"Воспринимаемое ускорение: пользователь видит первые слова в "
         f"{stream_total / ttft:.1f}x раньше конца генерации."
     )
+
+    # blocking_call должен вернуть непустой текст и положительное время.
+    assert block_text.strip(), "пустой текст ответа"
+    assert block_total > 0, block_total
+
     assert ttft < stream_total, (ttft, stream_total)
     print("[OK] ex2_solution: стриминг не меняет общее время, но снижает TTFT.")
 

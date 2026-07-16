@@ -48,20 +48,45 @@ INJECTION_MARKERS = [
 
 
 def sanitize_context(chunks: list[str]) -> list[str]:
-    """Убрать предложения с инъекционными маркерами из чанков."""
-    # TODO: для каждого чанка разбить на предложения и выкинуть те,
-    #       что матчат INJECTION_MARKERS (IGNORECASE); склеить обратно
+    """Убрать предложения с инъекционными маркерами из чанков.
+
+    Args:
+        chunks: список чанков контекста, потенциально с инъекциями.
+
+    Returns:
+        Список очищенных чанков. Для каждого чанка разбейте на
+        предложения и выкиньте те, что матчат INJECTION_MARKERS
+        (IGNORECASE); склейте обратно.
+    """
+    # TODO
     raise NotImplementedError
 
 
 def build_prompt(question: str, chunks: list[str]) -> str:
-    """Промпт, где контекст явно помечен как недоверенные данные."""
-    # TODO: собрать текст с пометкой, что контекст — это ДАННЫЕ, а не
-    #       инструкции, и им нельзя подчиняться (см. §3)
+    """Собрать промпт, где контекст явно помечен как недоверенные данные.
+
+    Args:
+        question: вопрос пользователя.
+        chunks: чанки контекста (уже очищенные sanitize_context).
+
+    Returns:
+        Текст промпта с пометкой, что контекст — это ДАННЫЕ, а не
+        инструкции, и им нельзя подчиняться (см. §3).
+    """
+    # TODO
     raise NotImplementedError
 
 
 def ask(question: str, chunks: list[str]) -> str:
+    """Спросить модель с контекстом, собранным через build_prompt.
+
+    Args:
+        question: вопрос пользователя.
+        chunks: чанки контекста.
+
+    Returns:
+        Текстовый ответ модели.
+    """
     client = get_client()
     model = first_model_id(client)
     resp = client.chat.completions.create(
@@ -79,6 +104,13 @@ def main() -> None:
     cleaned = sanitize_context(CLEAN_DOCS)
     assert "ВЗЛОМАНО" not in " ".join(cleaned)
     assert any("две недели" in c for c in cleaned)  # полезный текст сохранён
+
+    # Оффлайн-проверка build_prompt: содержит вопрос, контекст и явную
+    # пометку, что контекст — недоверенные данные (см. §3).
+    prompt = build_prompt(question, ["Тестовый чанк контекста."])
+    assert question in prompt
+    assert "Тестовый чанк контекста." in prompt
+    assert "недовер" in prompt.lower()
 
     try:
         without_guard = ask(question, CLEAN_DOCS)      # уязвимо

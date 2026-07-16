@@ -59,14 +59,20 @@ def demo_overfitting() -> tuple[float, float]:
     y_test = true_fn(x_test)
 
     degree = 5  # степень = точек-1 → интерполяция без остатка
+    # np.polyfit(x, y, degree) — подобрать коэффициенты многочлена заданной
+    # степени методом наименьших квадратов (возвращает коэффициенты).
     coeffs = np.polyfit(x_train, y_train, degree)
 
+    # np.polyval(coeffs, x) — вычислить значения этого многочлена в точках x.
     train_loss = mse_loss(np.polyval(coeffs, x_train), y_train)
     test_loss = mse_loss(np.polyval(coeffs, x_test), y_test)
     return train_loss, test_loss
 
 
 def main() -> None:
+    # mse_loss на простом примере (без обучения)
+    assert mse_loss(np.array([1.0, 2.0]), np.array([1.0, 4.0])) == 2.0
+
     rng = np.random.default_rng(0)
     x = np.linspace(-1, 1, 50)
     y = 2.0 * x + 1.0 + rng.normal(0, 0.05, size=x.shape)

@@ -72,6 +72,10 @@ def answer(question: str, context_chunks: list[str]) -> str:
 
 
 def main() -> None:
+    # Оффлайн-проверка cos_sim (без LM Studio):
+    assert cos_sim(np.array([1.0, 0.0]), np.array([1.0, 0.0])) == 1.0
+    assert cos_sim(np.array([1.0, 0.0]), np.array([0.0, 1.0])) == 0.0
+
     question = "Насколько ускоритель Зимородок-7 сокращает латентность?"
     try:
         without_rag = _generate(question, None)
@@ -85,6 +89,10 @@ def main() -> None:
     print("\nНайденные чанки:")
     for c in chunks:
         print(f"  - {c}")
+
+    # retrieve должен найти релевантный чанк про сам ускоритель.
+    assert any("Зимородок-7" in c and "42%" in c for c in chunks), chunks
+
     print(f"\nОтвет С RAG: {with_rag}")
 
     assert "42" in with_rag, with_rag

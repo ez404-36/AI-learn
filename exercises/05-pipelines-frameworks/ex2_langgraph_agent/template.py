@@ -44,6 +44,14 @@ _OPS = {ast.Add: operator.add, ast.Sub: operator.sub,
 
 
 def calc(expr: str) -> str:
+    """Посчитать простое арифметическое выражение.
+
+    Args:
+        expr: строка с выражением (+ - * / и скобки).
+
+    Returns:
+        Строка с результатом вычисления.
+    """
     def ev(n: ast.AST) -> float:
         if isinstance(n, ast.Constant):
             return float(n.value)
@@ -62,6 +70,13 @@ class AgentState(TypedDict):
 
 
 def make_model():
+    """Создать ChatOpenAI, направленный в LM Studio.
+
+    Returns:
+        Настроенная модель ChatOpenAI (temperature=0, stop=["\\n"] —
+        остановка генерации на первом переносе строки, чтобы модель
+        выводила ровно одну строку за раз).
+    """
     from langchain_openai import ChatOpenAI
 
     model_id = first_model_id()
@@ -70,19 +85,41 @@ def make_model():
 
 
 def think(state: AgentState) -> AgentState:
-    """Узел: спросить модель, что делать дальше; записать строку в state."""
+    """Узел: спросить модель, что делать дальше; записать строку в state.
+
+    Args:
+        state: текущее состояние агента (вопрос, накопленный диалог,
+            последняя строка модели, финальный ответ).
+
+    Returns:
+        Обновлённый state с новой строкой модели в state["last"].
+        model.invoke([SystemMessage(SYSTEM), HumanMessage(user)]) вернёт
+        объект сообщения с полем .content (текст ответа); положите
+        .content (первую строку) в state["last"].
+    """
+    # SystemMessage/HumanMessage — обёртки LangChain над ролями сообщений
+    # (аналог {"role": "system", ...} / {"role": "user", ...} из raw OpenAI
+    # API): SystemMessage(text) — системная инструкция, HumanMessage(text)
+    # — реплика пользователя.
     from langchain_core.messages import HumanMessage, SystemMessage
 
     model = make_model()
     convo = "\n".join(state["scratch"])
     user = f"Вопрос: {state['question']}\n{convo}".strip()
-    # TODO: model.invoke([SystemMessage(SYSTEM), HumanMessage(user)]),
-    #       положить .content (первую строку) в state["last"], вернуть state
+    # TODO
     raise NotImplementedError
 
 
 def tool(state: AgentState) -> AgentState:
-    """Узел: выполнить calc[...] из последней строки, добавить Observation."""
+    """Узел: выполнить calc[...] из последней строки, добавить Observation.
+
+    Args:
+        state: текущее состояние агента.
+
+    Returns:
+        Обновлённый state с добавленными в scratch строками Action и
+        Observation.
+    """
     m = re.search(r"calc\[(.*?)\]", state["last"])
     obs = calc(m.group(1)) if m else "Ошибка"
     state["scratch"].append(state["last"])
@@ -91,27 +128,63 @@ def tool(state: AgentState) -> AgentState:
 
 
 def route(state: AgentState) -> str:
-    """Условное ребро: 'tool' если модель просит Action, иначе END."""
+    """Условное ребро: 'tool' если модель просит Action, иначе END.
+
+    Args:
+        state: текущее состояние агента.
+
+    Returns:
+        "tool", если в state["last"] есть "Action:", иначе END (записав
+        финальный ответ в state["answer"]).
+    """
     from langgraph.graph import END
 
-    # TODO: вернуть "tool" если в state["last"] есть "Action:",
-    #       иначе записать финальный ответ в state["answer"] и вернуть END
+    # TODO
     raise NotImplementedError
 
 
 def build_graph():
-    """Собрать граф: think → (route) → tool → think, либо END."""
+    """Собрать граф: think → (route) → tool → think, либо END.
+
+    Returns:
+        Скомпилированное приложение LangGraph (объект с методом
+        .invoke(initial_state)). graph.add_node("think", think) —
+        зарегистрировать функцию think как узел графа с именем "think"
+        (аналогично для "tool"); graph.add_edge(START, "think") — обычное
+        ребро: откуда → куда; graph.add_conditional_edges("think", route,
+        {"tool": "tool", END: END}) — условное ребро: после узла "think"
+        вызвать route(state), и по её результату ("tool" или END) перейти
+        в соответствующий узел; graph.add_edge("tool", "think") — после
+        инструмента снова думать; graph.compile() — собрать граф в
+        исполняемое приложение.
+    """
+    # StateGraph(AgentState) — граф, состояние которого — словарь по схеме
+    # AgentState; узлы получают state и возвращают обновлённый state.
+    # START/END — специальные маркеры входа и выхода графа.
     from langgraph.graph import END, START, StateGraph
 
     graph = StateGraph(AgentState)
-    # TODO: add_node("think", think); add_node("tool", tool);
-    #       add_edge(START, "think");
-    #       add_conditional_edges("think", route, {"tool": "tool", END: END});
-    #       add_edge("tool", "think"); return graph.compile()
+    # TODO
     raise NotImplementedError
 
 
 def main() -> None:
+    from langgraph.graph import END
+
+    # Оффлайн-проверка инструмента и условного ребра (без LLM):
+    assert calc("(12 + 8) * 3") == "60"
+
+    state_tool: AgentState = {
+        "question": "", "scratch": [], "last": "Action: calc[1+1]", "answer": ""
+    }
+    assert route(state_tool) == "tool"
+
+    state_final: AgentState = {
+        "question": "", "scratch": [], "last": "Final: 42", "answer": ""
+    }
+    assert route(state_final) == END
+    assert state_final["answer"] == "42"
+
     try:
         app = build_graph()
         result = app.invoke(
@@ -120,8 +193,9 @@ def main() -> None:
             {"recursion_limit": 20},
         )
     except LMStudioUnavailableError as exc:
-        print(f"[SKIP] {exc}", file=sys.stderr)
-        sys.exit(1)
+        print(f"[SKIP] LLM-часть пропущена: {exc}", file=sys.stderr)
+        print("[OK] ex2_langgraph_agent: инструмент calc и структура графа корректны.")
+        return
 
     print("Трасса:", *result["scratch"], sep="\n  ")
     print(f"Ответ: {result['answer']}")

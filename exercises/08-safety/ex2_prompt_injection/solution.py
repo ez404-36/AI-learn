@@ -72,6 +72,13 @@ def main() -> None:
     assert "ВЗЛОМАНО" not in " ".join(cleaned)
     assert any("две недели" in c for c in cleaned)
 
+    # Оффлайн-проверка build_prompt: содержит вопрос, контекст и явную
+    # пометку, что контекст — недоверенные данные (см. §3).
+    prompt = build_prompt(question, ["Тестовый чанк контекста."])
+    assert question in prompt
+    assert "Тестовый чанк контекста." in prompt
+    assert "недовер" in prompt.lower()
+
     try:
         without_guard = ask(question, CLEAN_DOCS)
         with_guard = ask(question, cleaned)

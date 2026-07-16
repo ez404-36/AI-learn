@@ -78,6 +78,10 @@ def main() -> None:
     assert not exact_match("Лондон", "Париж")
 
     try:
+        # Прямая проверка llm_judge на явно верном и явно неверном ответе.
+        assert llm_judge("Столица Франции?", "Париж", "Париж") is True
+        assert llm_judge("Столица Франции?", "Париж", "Берлин") is False
+
         exact_score, judge_score = run_evals()
     except LMStudioUnavailableError as exc:
         print(f"[SKIP] LLM-часть пропущена: {exc}", file=sys.stderr)

@@ -30,38 +30,72 @@ from common.lmstudio_client import (
 
 
 def calculator(expression: str) -> str:
-    """Безопасно посчитать арифметическое выражение вида '2 + 2 * 3'."""
+    """Безопасно посчитать арифметическое выражение вида '2 + 2 * 3'.
+
+    Args:
+        expression: строка с выражением (разрешены + - * / и скобки).
+
+    Returns:
+        Строка с результатом вычисления.
+    """
     # TODO: разберите выражение БЕЗ eval (например через ast) и верните
-    #       строку с результатом. Разрешены + - * / и скобки.
+    #       строку с результатом.
     raise NotImplementedError
 
 
 # TODO: опишите инструмент calculator в формате OpenAI tools:
 # список из одного dict {"type": "function", "function": {name, description,
 # parameters: {...JSON Schema...}}}
+# JSON Schema — стандартный формат описания структуры JSON-объекта
+# (какие поля есть, какого они типа, какие обязательны); здесь им
+# описываются аргументы функции, чтобы модель знала, что и как передавать.
 TOOLS_SCHEMA: list[dict] = []
 
 
 def run_with_tools(question: str) -> str:
-    """Полный цикл tool calling, вернуть финальный текстовый ответ."""
+    """Полный цикл tool calling: запрос → tool_call → выполнить → финальный ответ.
+
+    Args:
+        question: вопрос пользователя.
+
+    Returns:
+        Финальный текстовый ответ модели после выполнения инструментов.
+        Шаги:
+          1. Первый вызов chat.completions.create с параметром
+             tools=TOOLS_SCHEMA — так модель узнаёт, какие функции ей
+             доступны, и вместо обычного текста может попросить их вызвать.
+          2. Если модель вернула message.tool_calls (список запросов на
+             вызов функций, у каждого свои .id, .function.name,
+             .function.arguments) — для каждого выполнить calculator,
+             добавить в messages:
+               - сообщение {"role": "assistant", ..., "tool_calls": [...]}
+                 (то, что попросила модель);
+               - сообщение {"role": "tool", "tool_call_id": tc.id,
+                 "content": результат} — ответ на конкретный вызов
+                 (id должен совпадать, чтобы модель поняла, к какому
+                 запросу относится результат).
+          3. Второй вызов без tools — получить финальный текстовый ответ.
+    """
     client = get_client()
     model = first_model_id(client)
     messages: list[dict] = [{"role": "user", "content": question}]
-    # TODO:
-    #  1. Первый вызов chat.completions.create с tools=TOOLS_SCHEMA.
-    #  2. Если модель вернула tool_calls — для каждого выполнить calculator,
-    #     добавить в messages сообщение assistant с tool_calls и сообщения
-    #     с role="tool" (tool_call_id + результат).
-    #  3. Второй вызов без tools — получить финальный ответ.
+    # TODO
     raise NotImplementedError
 
 
 def main() -> None:
+    # Оффлайн-проверка самого инструмента и его схемы (без LLM):
+    assert calculator("17 * 23 + 5") == "396"
+    assert TOOLS_SCHEMA[0]["type"] == "function"
+    assert TOOLS_SCHEMA[0]["function"]["name"] == "calculator"
+    assert "expression" in TOOLS_SCHEMA[0]["function"]["parameters"]["properties"]
+
     try:
         answer = run_with_tools("Сколько будет 17 * 23 + 5? Ответь числом.")
     except LMStudioUnavailableError as exc:
-        print(f"[SKIP] {exc}", file=sys.stderr)
-        sys.exit(1)
+        print(f"[SKIP] LLM-часть пропущена: {exc}", file=sys.stderr)
+        print("[OK] ex1_tool_calling: инструмент calculator корректен (17*23+5=396).")
+        return
 
     print(f"Ответ модели: {answer}")
     assert "396" in answer, answer  # 17*23+5 = 396

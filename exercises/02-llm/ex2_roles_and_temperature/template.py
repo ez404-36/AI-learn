@@ -27,14 +27,28 @@ SYSTEM_PROMPT = "Ты — краткий ассистент. Отвечай од
 
 
 def ask(user_text: str, temperature: float) -> str:
-    """Отправить system+user сообщения в чат-модель, вернуть ответ."""
+    """Отправить system+user сообщения в чат-модель, вернуть ответ.
+
+    Args:
+        user_text: реплика пользователя.
+        temperature: степень случайности сэмплирования: 0 почти
+            детерминирован, 1 — заметный разброс формулировок.
+
+    Returns:
+        client.chat.completions.create(model=model, messages=[...],
+        temperature=temperature).choices[0].message.content — текст
+        первого варианта ответа (choices — список альтернатив, обычно
+        из одного элемента). messages — список реплик диалога по ролям:
+        "system" — инструкция модели (как себя вести), "user" — реплика
+        пользователя, "assistant" — прошлый ответ модели (для истории).
+    """
+    # get_client() — настроенный клиент openai.OpenAI, направленный на
+    # локальный сервер LM Studio (не проверяет доступность сразу).
     client = get_client()
+    # first_model_id(client) — id первой загруженной в LM Studio модели
+    # (заодно проверяет, что сервер отвечает).
     model = first_model_id(client)
-    # TODO: client.chat.completions.create(
-    #           model=model,
-    #           messages=[{"role": "system", ...}, {"role": "user", ...}],
-    #           temperature=temperature)
-    #       вернуть .choices[0].message.content
+    # TODO
     raise NotImplementedError
 
 
@@ -54,6 +68,11 @@ def main() -> None:
     print("temperature=1:")
     for s in samples:
         print(f"  - {s}")
+
+    # ask() должен возвращать непустой текст ответа при любой temperature.
+    assert a0.strip(), "пустой ответ при temperature=0"
+    assert b0.strip(), "пустой ответ при temperature=0"
+    assert all(s.strip() for s in samples), "пустой ответ при temperature=1"
     print("[OK] ex2: сравните детерминизм при 0 и разброс при 1.")
 
 

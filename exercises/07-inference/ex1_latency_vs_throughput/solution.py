@@ -65,6 +65,12 @@ def main() -> None:
           f"{toks / secs:.1f} ток/сек (латентность)")
     print(f"Throughput последовательно: {seq:.1f} ток/сек")
     print(f"Throughput параллельно:     {par:.1f} ток/сек")
+
+    assert text.strip(), "пустой текст ответа"
+    assert secs > 0, secs
+    assert toks > 0, toks
+    assert seq > 0, seq
+    assert par > 0, par
     print(
         "[OK] ex1_solution: параллельный throughput обычно ВЫШЕ "
         "последовательного — это и есть суть батчинга (§4)."

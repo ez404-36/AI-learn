@@ -114,8 +114,11 @@ def run_with_tools(question: str) -> str:
 
 
 def main() -> None:
-    # Оффлайн-проверка самого инструмента (без LLM):
+    # Оффлайн-проверка самого инструмента и его схемы (без LLM):
     assert calculator("17 * 23 + 5") == "396"
+    assert TOOLS_SCHEMA[0]["type"] == "function"
+    assert TOOLS_SCHEMA[0]["function"]["name"] == "calculator"
+    assert "expression" in TOOLS_SCHEMA[0]["function"]["parameters"]["properties"]
 
     try:
         answer = run_with_tools("Сколько будет 17 * 23 + 5? Ответь числом.")

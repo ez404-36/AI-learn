@@ -1,7 +1,10 @@
 """Упражнение 06.3 — DPO loss на игрушечных лог-вероятностях (без LLM).
 
-Опирается на §5 теории 06: DPO учит модель напрямую на парах ответов
-«лучше (chosen) / хуже (rejected)», без отдельной reward-модели и RL.
+Опирается на §5 теории 06: DPO (Direct Preference Optimization) учит
+модель напрямую на парах ответов «лучше (chosen) / хуже (rejected)»,
+без отдельной reward-модели (модели вознаграждения — отдельной сети,
+которая оценивает качество ответа) и RL (Reinforcement Learning,
+обучение с подкреплением — классический подход RLHF, см. теорию).
 
 Формула DPO loss для одной пары:
     loss = -log( sigmoid( beta * ( (lp_chosen  - lp_ref_chosen)
@@ -27,17 +30,37 @@ def dpo_loss(
     ref_rejected: torch.Tensor,
     beta: float = 0.1,
 ) -> torch.Tensor:
-    """Средний DPO loss по батчу пар предпочтений."""
-    # TODO:
-    #   pi_logratios  = lp_chosen - lp_rejected
-    #   ref_logratios = ref_chosen - ref_rejected
-    #   logits = pi_logratios - ref_logratios
-    #   loss = -F.logsigmoid(beta * logits)
-    #   return loss.mean()
+    """Средний DPO loss по батчу пар предпочтений.
+
+    Args:
+        lp_chosen: суммарные log-вероятности chosen-ответа под policy.
+        lp_rejected: суммарные log-вероятности rejected-ответа под policy.
+        ref_chosen: суммарные log-вероятности chosen-ответа под ref-моделью.
+        ref_rejected: суммарные log-вероятности rejected-ответа под
+            ref-моделью.
+        beta: коэффициент масштабирования разницы логарифмов (регулирует
+            силу штрафа за отклонение от ref-модели).
+
+    Returns:
+        Тензор-скаляр (0-мерный) со средним DPO loss по батчу:
+          pi_logratios  = lp_chosen - lp_rejected
+          ref_logratios = ref_chosen - ref_rejected
+          logits = pi_logratios - ref_logratios
+          loss = -F.logsigmoid(beta * logits) — F.logsigmoid(x) численно
+              устойчивый log(sigmoid(x)) (эквивалент
+              torch.log(torch.sigmoid(x)), но без потери точности при
+              больших |x|), применяется поэлементно к тензору.
+          return loss.mean() — среднее по всем элементам тензора (как
+              np.mean), возвращает тензор-скаляр, не Python-число.
+    """
+    # TODO
     raise NotImplementedError
 
 
 def main() -> None:
+    # torch.tensor(list) — создать тензор PyTorch из обычного Python-списка
+    # (аналог np.array(list), но для PyTorch: поддерживает autograd,
+    # работает на GPU и т.д.).
     # Опорная модель одинаково оценивает chosen и rejected.
     ref_chosen = torch.tensor([-2.0, -2.0])
     ref_rejected = torch.tensor([-2.0, -2.0])
@@ -56,10 +79,20 @@ def main() -> None:
         ref_chosen=ref_chosen,
         ref_rejected=ref_rejected,
     )
+    # Случай C: policy = ref (нейтрально) → logits=0 → loss = -log(0.5).
+    neutral = dpo_loss(
+        lp_chosen=torch.tensor([-2.0]),
+        lp_rejected=torch.tensor([-2.0]),
+        ref_chosen=torch.tensor([-2.0]),
+        ref_rejected=torch.tensor([-2.0]),
+    )
 
     print(f"loss (policy предпочитает chosen): {good.item():.4f}")
     print(f"loss (policy предпочитает rejected): {bad.item():.4f}")
-    assert good.item() < bad.item()
+    print(f"loss (нейтрально): {neutral.item():.4f} ≈ -log(0.5)")
+
+    assert good.item() < neutral.item() < bad.item()
+    assert abs(neutral.item() - torch.log(torch.tensor(2.0)).item()) < 1e-5
     print("[OK] ex3_dpo_loss: loss ниже, когда модель предпочитает лучший ответ.")
 
 

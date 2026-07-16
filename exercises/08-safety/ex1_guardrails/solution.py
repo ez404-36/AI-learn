@@ -70,6 +70,12 @@ def main() -> None:
     assert blocked == REFUSAL
     print(f"Заблокированный ввод → {blocked}")
     print(f"Обычный ответ → {normal}")
+
+    # Ветка редактирования выхода в safe_generate тоже должна отработать:
+    # ответ непустой и не содержит "сырых" email/телефонов.
+    assert normal.strip(), "пустой ответ"
+    assert not re.search(r"[\w.+-]+@[\w-]+\.[\w.-]+", normal), normal
+    assert not re.search(r"\d{7,}", normal), normal
     print("[OK] ex1_solution: вход отфильтрован, выход очищен от PII.")
 
 

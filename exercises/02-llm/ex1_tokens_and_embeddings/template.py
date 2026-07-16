@@ -29,26 +29,66 @@ EMBED_MODEL = "nomic-embed-text"
 
 
 def embed_text(text: str, model: str = EMBED_MODEL) -> np.ndarray:
-    """Вернуть embedding строки как np.ndarray (float)."""
+    """Получить embedding строки через LM Studio.
+
+    Args:
+        text: строка, для которой нужен вектор.
+        model: имя embedding-модели в LM Studio.
+
+    Returns:
+        Вектор embedding'а как np.ndarray (float): client.embeddings.create(
+        model=model, input=text) — запрос к эндпоинту /v1/embeddings,
+        возвращает объект resp с полем .data (список результатов по
+        каждой входной строке); resp.data[0].embedding — сам вектор
+        (обычный list[float]); np.array(...) оборачивает его в np.ndarray
+        для арифметики (cos_sim).
+    """
+    # ensure_server() — наш хелпер из common/lmstudio_client.py: возвращает
+    # настроенный клиент openai.OpenAI и сразу проверяет, что LM Studio
+    # доступен (иначе бросает понятную LMStudioUnavailableError).
     client = ensure_server()
-    # TODO: client.embeddings.create(model=model, input=text)
-    #       → взять .data[0].embedding, обернуть в np.array
+    # TODO
     raise NotImplementedError
 
 
 def cos_sim(a: np.ndarray, b: np.ndarray) -> float:
-    """Косинусная близость двух векторов."""
-    # TODO (формула из §3 теории 02)
+    """Косинусная близость двух векторов (формула из §3 теории 02).
+
+    Args:
+        a: первый вектор.
+        b: второй вектор.
+
+    Returns:
+        cos_sim = dot(a, b) / (norm(a) * norm(b)), где np.dot(a, b) —
+        скалярное произведение векторов (сумма a[i]*b[i]), а
+        np.linalg.norm(v) — длина (норма) вектора: sqrt(сумма v[i]**2).
+    """
+    # TODO
     raise NotImplementedError
 
 
 def nearest(query: str, phrases: list[str]) -> str:
-    """Вернуть фразу из `phrases`, ближайшую к `query` по смыслу."""
-    # TODO: заэмбедить query и все phrases, вернуть argmax по cos_sim
+    """Найти фразу из `phrases`, ближайшую к `query` по смыслу.
+
+    Args:
+        query: запрос, для которого ищем ближайшую по смыслу фразу.
+        phrases: набор фраз-кандидатов.
+
+    Returns:
+        Элемент phrases с наибольшим cos_sim к query. Заэмбедите query
+        и все phrases, верните argmax по cos_sim: np.argmax(list_or_array)
+        — индекс наибольшего элемента (не само значение, а его позиция).
+    """
+    # TODO
     raise NotImplementedError
 
 
 def main() -> None:
+    # Оффлайн-проверка cos_sim (без LM Studio):
+    assert cos_sim(np.array([1.0, 0.0]), np.array([1.0, 0.0])) == 1.0
+    assert cos_sim(np.array([1.0, 0.0]), np.array([0.0, 1.0])) == 0.0
+    assert cos_sim(np.array([1.0, 0.0]), np.array([-1.0, 0.0])) == -1.0
+
     phrases = [
         "кошка спит на диване",
         "котёнок играет с клубком",

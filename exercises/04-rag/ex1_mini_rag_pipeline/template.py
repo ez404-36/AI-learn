@@ -41,45 +41,111 @@ DOCS = [
 
 
 def embed_text(text: str, model: str = EMBED_MODEL) -> np.ndarray:
-    """Вернуть embedding строки как np.ndarray."""
+    """Получить embedding строки через LM Studio.
+
+    Args:
+        text: строка, для которой нужен вектор.
+        model: имя embedding-модели в LM Studio.
+
+    Returns:
+        Вектор embedding'а как np.ndarray.
+    """
     # TODO
     raise NotImplementedError
 
 
 def cos_sim(a: np.ndarray, b: np.ndarray) -> float:
-    """Косинусная близость."""
+    """Косинусная близость двух векторов.
+
+    Args:
+        a: первый вектор.
+        b: второй вектор.
+
+    Returns:
+        Косинусная близость a и b (раздел 02/04).
+    """
     # TODO
     raise NotImplementedError
 
 
 def retrieve(question: str, docs: list[str], top_k: int = 2) -> list[str]:
-    """Вернуть top_k документов, ближайших по смыслу к вопросу."""
-    # TODO: заэмбедить вопрос и docs, отсортировать по cos_sim, взять top_k
+    """Найти top_k документов, ближайших по смыслу к вопросу.
+
+    Args:
+        question: вопрос, для которого ищем релевантный контекст.
+        docs: набор документов-кандидатов.
+        top_k: сколько ближайших документов вернуть.
+
+    Returns:
+        Список из top_k документов, отсортированных по убыванию cos_sim
+        к вопросу. Заэмбедите вопрос и docs, отсортируйте по cos_sim.
+    """
+    # TODO
     raise NotImplementedError
 
 
 def answer(question: str, context_chunks: list[str]) -> str:
-    """Сгенерировать ответ, опираясь ТОЛЬКО на переданный контекст."""
+    """Сгенерировать ответ, опираясь ТОЛЬКО на переданный контекст.
+
+    Args:
+        question: вопрос пользователя.
+        context_chunks: релевантные чанки контекста (из retrieve).
+
+    Returns:
+        Текстовый ответ модели. Соберите промпт с инструкцией «используй
+        только контекст ниже» (см. §5 теории) и вызовите
+        chat.completions.create.
+    """
     client = get_client()
     model = first_model_id(client)
-    # TODO: собрать промпт с инструкцией «используй только контекст ниже»
-    #       (см. §5 теории) и вызвать chat.completions.create
+    # TODO
     raise NotImplementedError
 
 
+def _without_rag(question: str) -> str:
+    """Готовый вспомогательный код: спросить модель БЕЗ контекста, чтобы
+    показать, что вымышленный факт ей неизвестен (см. докстринг модуля).
+    Реализовывать не нужно — используется только для демонстрации.
+
+    Args:
+        question: вопрос пользователя.
+
+    Returns:
+        Текстовый ответ модели без доступа к контексту.
+    """
+    client = get_client()
+    model = first_model_id(client)
+    resp = client.chat.completions.create(
+        model=model,
+        messages=[{"role": "user", "content": question}],
+        temperature=0.0,
+    )
+    return (resp.choices[0].message.content or "").strip()
+
+
 def main() -> None:
+    # Оффлайн-проверка cos_sim (без LM Studio):
+    assert cos_sim(np.array([1.0, 0.0]), np.array([1.0, 0.0])) == 1.0
+    assert cos_sim(np.array([1.0, 0.0]), np.array([0.0, 1.0])) == 0.0
+
     question = "Насколько ускоритель Зимородок-7 сокращает латентность?"
     try:
+        without_rag = _without_rag(question)
         chunks = retrieve(question, DOCS, top_k=2)
         with_rag = answer(question, chunks)
     except LMStudioUnavailableError as exc:
         print(f"[SKIP] {exc}", file=sys.stderr)
         sys.exit(1)
 
-    print("Найденные чанки:")
+    print(f"Ответ БЕЗ RAG (модель не знает факта): {without_rag}")
+    print("\nНайденные чанки:")
     for c in chunks:
         print(f"  - {c}")
-    print(f"Ответ с RAG: {with_rag}")
+
+    # retrieve должен найти релевантный чанк про сам ускоритель.
+    assert any("Зимородок-7" in c and "42%" in c for c in chunks), chunks
+
+    print(f"\nОтвет с RAG: {with_rag}")
     assert "42" in with_rag, with_rag
     print("[OK] ex1_mini_rag: ответ основан на извлечённом контексте.")
 

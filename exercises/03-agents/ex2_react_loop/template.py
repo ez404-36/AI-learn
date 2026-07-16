@@ -48,31 +48,50 @@ SYSTEM_PROMPT = """Ты — агент, работающий по протоко
 
 
 def run_tool(action: str) -> str:
-    """Выполнить действие 'name[arg]' и вернуть Observation."""
-    # TODO: распарсить name и arg из строки вида 'calc[1+2]';
-    #       для 'lookup' искать в FACTS (по нижнему регистру),
-    #       для 'calc' — посчитать арифметику; вернуть текст-наблюдение.
+    """Выполнить действие 'name[arg]' и вернуть Observation.
+
+    Args:
+        action: строка вида 'calc[1+2]' или 'lookup[Москва]'.
+
+    Returns:
+        Текст-наблюдение (Observation): распарсить name и arg из строки;
+        для 'lookup' искать в FACTS (по нижнему регистру), для 'calc' —
+        посчитать арифметику.
+    """
+    # TODO
     raise NotImplementedError
 
 
 def react(question: str, max_steps: int = 6) -> str:
-    """ReAct-цикл, вернуть финальный ответ (то, что после 'Final:')."""
+    """ReAct-цикл: Thought → Action → Observation, до финального ответа.
+
+    Args:
+        question: вопрос пользователя.
+        max_steps: максимум шагов цикла до принудительной остановки.
+
+    Returns:
+        Финальный ответ (то, что после 'Final:'). До max_steps раз:
+          - вызвать модель (temperature=0), взять первую строку ответа;
+          - если строка начинается с 'Final:' → вернуть остаток;
+          - если 'Action:' → выполнить run_tool, добавить в messages ответ
+            ассистента и Observation как user-сообщение;
+          - если 'Thought:' → просто добавить в контекст и продолжить.
+    """
     client = get_client()
     model = first_model_id(client)
     messages: list[dict] = [
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user", "content": question},
     ]
-    # TODO: до max_steps раз:
-    #   - вызвать модель (temperature=0), взять первую строку ответа;
-    #   - если строка начинается с 'Final:' → вернуть остаток;
-    #   - если 'Action:' → выполнить run_tool, добавить в messages ответ
-    #     ассистента и Observation как user-сообщение;
-    #   - если 'Thought:' → просто добавить в контекст и продолжить.
+    # TODO
     raise NotImplementedError
 
 
 def main() -> None:
+    # Оффлайн-проверка инструментов без LLM:
+    assert run_tool("calc[1703-1147]") == "556"
+    assert "1147" in run_tool("lookup[Москва]")
+
     question = (
         "На сколько лет Санкт-Петербург моложе Москвы? "
         "Используй инструменты, ответь числом."
@@ -80,8 +99,9 @@ def main() -> None:
     try:
         answer = react(question)
     except LMStudioUnavailableError as exc:
-        print(f"[SKIP] {exc}", file=sys.stderr)
-        sys.exit(1)
+        print(f"[SKIP] LLM-часть пропущена: {exc}", file=sys.stderr)
+        print("[OK] ex2_react_loop: инструменты run_tool корректны (calc/lookup).")
+        return
 
     print(f"Финальный ответ агента: {answer}")
     assert "556" in answer, answer  # 1703 - 1147 = 556

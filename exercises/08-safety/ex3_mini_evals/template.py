@@ -37,17 +37,40 @@ DATASET = [
 
 
 def normalize(text: str) -> str:
-    """Привести строку к нижнему регистру, убрать пунктуацию/пробелы по краям."""
+    """Привести строку к нижнему регистру, убрать пунктуацию/пробелы по краям.
+
+    Args:
+        text: исходная строка.
+
+    Returns:
+        Нормализованная строка для сравнения.
+    """
     return text.strip().lower().rstrip(".!?").strip()
 
 
 def exact_match(prediction: str, reference: str) -> bool:
-    """Нормализованное точное вхождение эталона в предсказание."""
-    # TODO: вернуть normalize(reference) in normalize(prediction)
+    """Нормализованное точное вхождение эталона в предсказание.
+
+    Args:
+        prediction: ответ модели.
+        reference: эталонный ответ.
+
+    Returns:
+        normalize(reference) in normalize(prediction).
+    """
+    # TODO
     raise NotImplementedError
 
 
 def model_answer(question: str) -> str:
+    """Спросить модель и вернуть краткий ответ.
+
+    Args:
+        question: вопрос из датасета.
+
+    Returns:
+        Текстовый ответ модели.
+    """
     client = get_client()
     model = first_model_id(client)
     resp = client.chat.completions.create(
@@ -62,15 +85,29 @@ def model_answer(question: str) -> str:
 
 
 def llm_judge(question: str, reference: str, prediction: str) -> bool:
-    """Второй вызов модели: верен ли prediction по смыслу? (True/False)."""
-    # TODO: собрать промпт-судью, попросить ответить строго YES или NO,
-    #       вернуть True, если в ответе есть YES
+    """Второй вызов модели: верен ли prediction по смыслу?
+
+    Args:
+        question: исходный вопрос.
+        reference: эталонный ответ.
+        prediction: ответ модели, который нужно оценить.
+
+    Returns:
+        True/False. Соберите промпт-судью, попросите ответить строго
+        YES или NO, верните True, если в ответе есть YES.
+    """
+    # TODO
     raise NotImplementedError
 
 
 def run_evals() -> tuple[float, float]:
-    """Прогнать датасет. Вернуть (доля exact_match, доля judge=YES)."""
-    # TODO: для каждого (q, ref): получить ответ модели, посчитать обе метрики
+    """Прогнать датасет по обеим метрикам.
+
+    Returns:
+        Кортеж (доля exact_match, доля judge=YES). Для каждого (q, ref):
+        получите ответ модели, посчитайте обе метрики.
+    """
+    # TODO
     raise NotImplementedError
 
 
@@ -80,6 +117,10 @@ def main() -> None:
     assert not exact_match("Лондон", "Париж")
 
     try:
+        # Прямая проверка llm_judge на явно верном и явно неверном ответе.
+        assert llm_judge("Столица Франции?", "Париж", "Париж") is True
+        assert llm_judge("Столица Франции?", "Париж", "Берлин") is False
+
         exact_score, judge_score = run_evals()
     except LMStudioUnavailableError as exc:
         print(f"[SKIP] LLM-часть пропущена: {exc}", file=sys.stderr)

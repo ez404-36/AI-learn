@@ -19,9 +19,21 @@ from torch import nn
 
 
 def build() -> tuple[nn.Module, nn.Module, torch.optim.Optimizer]:
-    """Вернуть (модель Linear(1,1), MSELoss, SGD-оптимизатор)."""
+    """Создать модель, loss-функцию и оптимизатор.
+
+    Returns:
+        Кортеж (модель Linear(1,1), MSELoss, SGD-оптимизатор).
+        nn.MSELoss() — готовый объект функции потерь (среднее квадратов
+        ошибки), вызывается как loss_fn(pred, target).
+        torch.optim.SGD(model.parameters(), lr=0.1) — оптимизатор
+        градиентного спуска; model.parameters() — все обучаемые тензоры
+        модели (веса, bias), lr — скорость обучения.
+    """
+    # nn.Linear(in_features, out_features) — готовый линейный слой PyTorch
+    # y = W @ x + b; веса W и b создаются автоматически со requires_grad=True
+    # (то есть PyTorch сам будет считать по ним градиенты).
     model = nn.Linear(1, 1)
-    # TODO: loss_fn = nn.MSELoss(); optimizer = torch.optim.SGD(model.parameters(), lr=0.1)
+    # TODO
     raise NotImplementedError
 
 
@@ -32,20 +44,56 @@ def train_step(
     x: torch.Tensor,
     y: torch.Tensor,
 ) -> float:
-    """Один шаг обучения. Вернуть значение loss (float)."""
-    # TODO (пять строк из §6 теории):
-    #   pred = model(x)
-    #   loss = loss_fn(pred, y)
-    #   loss.backward()
-    #   optimizer.step()
-    #   optimizer.zero_grad()
-    #   return loss.item()
+    """Один шаг обучения: forward → loss → backward → step → zero_grad.
+
+    Args:
+        model: обучаемая модель.
+        loss_fn: функция потерь.
+        optimizer: оптимизатор.
+        x: входные данные батча.
+        y: истинные значения батча.
+
+    Returns:
+        Значение loss (float) за этот шаг. Пять строк из §6 теории:
+          pred = model(x)         — forward pass: model(x) вызывает
+                                    forward, возвращает предсказание
+                                    (тензор с историей операций для
+                                    последующего backward).
+          loss = loss_fn(pred, y) — посчитать ошибку между pred и
+                                    истинным y.
+          loss.backward()         — autograd: посчитать градиенты loss по
+                                    ВСЕМ параметрам модели (заполняет
+                                    .grad у каждого параметра из
+                                    model.parameters()).
+          optimizer.step()        — обновить веса модели на основе .grad
+                                    (для SGD: w -= lr * w.grad).
+          optimizer.zero_grad()   — обнулить .grad перед следующим шагом
+                                    (иначе градиенты будут накапливаться).
+          return loss.item()      — .item() достаёт из тензора-скаляра
+                                    обычное Python-число (float).
+    """
+    # TODO
     raise NotImplementedError
 
 
 def train(epochs: int = 300) -> tuple[float, float]:
-    """Обучить модель на y=2x+1, вернуть выученные (w, b)."""
+    """Обучить модель на y=2x+1.
+
+    Args:
+        epochs: epoch — один полный проход обучения по всем примерам
+            данных; здесь каждая эпоха = один шаг градиентного спуска.
+
+    Returns:
+        Кортеж (w, b) — выученные параметры модели.
+    """
+    # torch.manual_seed(seed) — фиксирует случайность (инициализацию весов
+    # и т.п.) для воспроизводимого результата, аналог np.random.default_rng.
     torch.manual_seed(0)
+    # torch.linspace — как np.linspace, но возвращает тензор PyTorch.
+    # .unsqueeze(1) добавляет ось: было (50,), стало (50, 1) — nn.Linear
+    # ожидает вход вида (batch, features): batch — размер пакета примеров,
+    # обрабатываемых за один forward-проход (здесь все 50 точек — один
+    # батч), features — число признаков одного примера (здесь 1: сам x).
     x = torch.linspace(-1, 1, 50).unsqueeze(1)
     y = 2.0 * x + 1.0
 
@@ -53,6 +101,8 @@ def train(epochs: int = 300) -> tuple[float, float]:
     for _ in range(epochs):
         train_step(model, loss_fn, optimizer, x, y)
 
+    # model.weight / model.bias — обученные параметры слоя nn.Linear
+    # (тензоры формы (1,1) и (1,)); .item() достаёт из них Python-число.
     w = model.weight.item()
     b = model.bias.item()
     return w, b

@@ -96,8 +96,21 @@ def build_graph():
 
 
 def main() -> None:
-    # Оффлайн-проверка инструмента:
+    from langgraph.graph import END
+
+    # Оффлайн-проверка инструмента и условного ребра:
     assert calc("(12 + 8) * 3") == "60"
+
+    state_tool: AgentState = {
+        "question": "", "scratch": [], "last": "Action: calc[1+1]", "answer": ""
+    }
+    assert route(state_tool) == "tool"
+
+    state_final: AgentState = {
+        "question": "", "scratch": [], "last": "Final: 42", "answer": ""
+    }
+    assert route(state_final) == END
+    assert state_final["answer"] == "42"
 
     try:
         app = build_graph()

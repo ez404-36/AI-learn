@@ -51,10 +51,15 @@ def run(topic: str) -> str:
 
 def main() -> None:
     try:
+        model = make_model()
         result = run("что такое RAG")
     except LMStudioUnavailableError as exc:
         print(f"[SKIP] {exc}", file=sys.stderr)
         sys.exit(1)
+
+    # make_model должен вернуть модель, направленную в LM Studio.
+    assert model.openai_api_base == BASE_URL, model.openai_api_base
+    assert model.temperature == 0, model.temperature
 
     print(f"Итог цепочки: {result}")
     assert result.strip(), "пустой результат"

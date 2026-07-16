@@ -37,24 +37,58 @@ PROMPT = "Перечисли 5 планет Солнечной системы о
 
 
 def timed_completion(prompt: str) -> tuple[str, float, int]:
-    """Сделать один запрос, вернуть (текст, секунды, число_токенов_ответа)."""
+    """Сделать один запрос и замерить его длительность.
+
+    Args:
+        prompt: текст запроса к модели.
+
+    Returns:
+        Кортеж (текст, секунды, число_токенов_ответа).
+        time.perf_counter() — точные "часы" для замера длительности:
+        вызвать до и после запроса, разница = время выполнения в секундах
+        (не привязаны к календарному времени, только для интервалов).
+        Замерить вокруг chat.completions.create; число токенов взять из
+        resp.usage.completion_tokens — сервер сам возвращает статистику
+        по токенам в поле .usage ответа.
+    """
     client = get_client()
     model = first_model_id(client)
-    # TODO: замерить time.perf_counter() вокруг chat.completions.create;
-    #       число токенов взять из resp.usage.completion_tokens
+    # TODO
     raise NotImplementedError
 
 
 def sequential_throughput(n: int) -> float:
-    """N запросов ПОДРЯД. Вернуть суммарный throughput (токены/сек)."""
-    # TODO: суммировать токены и время, вернуть tokens/total_time
+    """N запросов ПОДРЯД.
+
+    Args:
+        n: сколько запросов сделать.
+
+    Returns:
+        Суммарный throughput (токены/сек): суммировать токены и время,
+        вернуть tokens/total_time.
+    """
+    # TODO
     raise NotImplementedError
 
 
 def parallel_throughput(n: int, workers: int = 4) -> float:
-    """N запросов ПАРАЛЛЕЛЬНО. Вернуть суммарный throughput (токены/сек)."""
-    # TODO: ThreadPoolExecutor; замерить общее время стены (wall-clock)
-    #       вокруг всех запросов, поделить суммарные токены на него
+    """N запросов ПАРАЛЛЕЛЬНО.
+
+    Args:
+        n: сколько запросов сделать.
+        workers: размер пула потоков (сколько запросов идёт одновременно).
+
+    Returns:
+        Суммарный throughput (токены/сек).
+        ThreadPoolExecutor(max_workers=workers) — пул потоков: позволяет
+        выполнить несколько блокирующих сетевых запросов одновременно
+        (используйте как контекстный менеджер, метод .map(fn, iterable)
+        запускает fn для каждого элемента параллельно и собирает
+        результаты в исходном порядке). Замерьте общее время стены
+        (wall-clock) вокруг всех запросов, поделите суммарные токены
+        на него.
+    """
+    # TODO
     raise NotImplementedError
 
 
@@ -71,6 +105,12 @@ def main() -> None:
           f"{toks / secs:.1f} ток/сек (латентность)")
     print(f"Throughput последовательно: {seq:.1f} ток/сек")
     print(f"Throughput параллельно:     {par:.1f} ток/сек")
+
+    assert text.strip(), "пустой текст ответа"
+    assert secs > 0, secs
+    assert toks > 0, toks
+    assert seq > 0, seq
+    assert par > 0, par
     print("[OK] ex1: сравните латентность одного запроса и общий throughput.")
 
 

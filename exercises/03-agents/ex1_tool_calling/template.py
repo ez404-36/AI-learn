@@ -13,12 +13,6 @@ LM Studio, выполняем запрошенный вызов руками и 
   1. calculator: посчитать простое арифметическое выражение (реальный tool).
   2. TOOLS_SCHEMA: описать инструмент в формате OpenAI tools.
   3. run_with_tools: цикл «запрос → tool_call → выполнить → вернуть tool → финальный ответ».
-
-Как работать:
-  1. `python setup_practice.py` создаст рядом work.py (копию этого файла).
-  2. Пишите код в work.py (он игнорируется git).
-  3. Запуск:  uv run python 03-agents/ex1_tool_calling/work.py
-  4. Сверка:  03-agents/ex1_tool_calling/solution.py
 """
 
 from __future__ import annotations

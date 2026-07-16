@@ -10,12 +10,6 @@
   1. build: создать модель, loss-функцию и оптимизатор.
   2. train_step: forward → loss → backward → step → zero_grad (§6 теории).
   3. train: прогнать несколько эпох, вернуть выученные w, b.
-
-Как работать:
-  1. `python setup_practice.py` создаст рядом work.py (копию этого файла).
-  2. Пишите код в work.py (он игнорируется git).
-  3. Запуск:  uv run python 05-pipelines-frameworks/ex3_pytorch_training/work.py
-  4. Сверка:  05-pipelines-frameworks/ex3_pytorch_training/solution.py
 """
 
 from __future__ import annotations

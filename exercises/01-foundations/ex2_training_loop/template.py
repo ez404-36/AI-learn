@@ -11,12 +11,6 @@ MSE — без autograd (реальный PyTorch-вариант будет в 0
   2. mse_loss: средний квадрат ошибки.
   3. gradients: аналитические производные MSE по w и b.
   4. train: собрать цикл из шагов и вернуть подобранные w, b.
-
-Как работать:
-  1. `python setup_practice.py` создаст рядом work.py (копию этого файла).
-  2. Пишите код в work.py (он игнорируется git).
-  3. Запуск:  uv run python 01-foundations/ex2_training_loop/work.py
-  4. Сверка:  01-foundations/ex2_training_loop/solution.py
 """
 
 from __future__ import annotations

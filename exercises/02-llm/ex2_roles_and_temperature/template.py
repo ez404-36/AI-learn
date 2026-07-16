@@ -9,12 +9,6 @@
 Задача:
   1. ask: отправить messages с заданной temperature, вернуть текст ответа.
   2. В main: сравнить разброс при temperature=0 и temperature=1.
-
-Как работать:
-  1. `python setup_practice.py` создаст рядом work.py (копию этого файла).
-  2. Пишите код в work.py (он игнорируется git).
-  3. Запуск:  uv run python 02-llm/ex2_roles_and_temperature/work.py
-  4. Сверка:  02-llm/ex2_roles_and_temperature/solution.py
 """
 
 from __future__ import annotations

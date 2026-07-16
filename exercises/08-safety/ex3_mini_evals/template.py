@@ -12,12 +12,6 @@
   1. exact_match: нормализовать и сравнить строки.
   2. llm_judge: спросить модель, верен ли ответ по смыслу (YES/NO).
   3. run_evals: прогнать датасет, вернуть (exact_score, judge_score).
-
-Как работать:
-  1. `python setup_practice.py` создаст рядом work.py (копию этого файла).
-  2. Пишите код в work.py (он игнорируется git).
-  3. Запуск:  uv run python 08-safety/ex3_mini_evals/work.py
-  4. Сверка:  08-safety/ex3_mini_evals/solution.py
 """
 
 from __future__ import annotations

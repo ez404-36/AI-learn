@@ -15,12 +15,6 @@
   1. think: вызвать модель, записать её строку в state.
   2. route: условное ребро — вернуть "tool" или END.
   3. build_graph: собрать StateGraph с узлами и условным ребром.
-
-Как работать:
-  1. `python setup_practice.py` создаст рядом work.py (копию этого файла).
-  2. Пишите код в work.py (он игнорируется git).
-  3. Запуск:  uv run python 05-pipelines-frameworks/ex2_langgraph_agent/work.py
-  4. Сверка:  05-pipelines-frameworks/ex2_langgraph_agent/solution.py
 """
 
 from __future__ import annotations

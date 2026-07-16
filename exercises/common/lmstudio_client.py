@@ -25,7 +25,7 @@ class LMStudioUnavailableError(RuntimeError):
     """LM Studio не запущен или не отвечает на BASE_URL."""
 
 
-def get_client() -> "openai.OpenAI":
+def get_client() -> openai.OpenAI:
     """Вернуть настроенный на LM Studio клиент OpenAI.
 
     Сам вызов не ходит в сеть — соединение проверяется при первом запросе.
@@ -34,7 +34,7 @@ def get_client() -> "openai.OpenAI":
     return openai.OpenAI(base_url=BASE_URL, api_key=API_KEY)
 
 
-def ensure_server(client: "openai.OpenAI | None" = None) -> "openai.OpenAI":
+def ensure_server(client: openai.OpenAI | None = None) -> openai.OpenAI:
     """Проверить, что сервер поднят, иначе — понятная ошибка.
 
     Делает лёгкий запрос `models.list()`. При отказе соединения бросает
@@ -55,7 +55,7 @@ def ensure_server(client: "openai.OpenAI | None" = None) -> "openai.OpenAI":
     return checked
 
 
-def first_model_id(client: "openai.OpenAI | None" = None) -> str:
+def first_model_id(client: openai.OpenAI | None = None) -> str:
     """Вернуть id первой загруженной в LM Studio модели.
 
     Удобно, когда не хочется хардкодить имя модели: LM Studio принимает

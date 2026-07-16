@@ -17,12 +17,6 @@ throughput — сколько запросов/токенов в секунду 
   1. timed_completion: вернуть (текст, длительность_сек, число_токенов).
   2. sequential_throughput: N запросов подряд.
   3. parallel_throughput: N запросов параллельно (ThreadPoolExecutor).
-
-Как работать:
-  1. `python setup_practice.py` создаст рядом work.py (копию этого файла).
-  2. Пишите код в work.py (он игнорируется git).
-  3. Запуск:  uv run python 07-inference/ex1_latency_vs_throughput/work.py
-  4. Сверка:  07-inference/ex1_latency_vs_throughput/solution.py
 """
 
 from __future__ import annotations

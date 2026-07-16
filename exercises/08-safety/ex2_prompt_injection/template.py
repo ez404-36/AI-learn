@@ -14,12 +14,6 @@
 Задача:
   1. sanitize_context: удалить из чанков инъекционные инструкции.
   2. build_prompt: собрать промпт, явно пометив контекст как НЕДОВЕРЕННЫЕ данные.
-
-Как работать:
-  1. `python setup_practice.py` создаст рядом work.py (копию этого файла).
-  2. Пишите код в work.py (он игнорируется git).
-  3. Запуск:  uv run python 08-safety/ex2_prompt_injection/work.py
-  4. Сверка:  08-safety/ex2_prompt_injection/solution.py
 """
 
 from __future__ import annotations

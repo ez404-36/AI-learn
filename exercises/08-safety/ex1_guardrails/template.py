@@ -13,12 +13,6 @@
   1. input_blocked: True, если ввод содержит запрещённый паттерн.
   2. redact_pii: замаскировать email и телефоны в тексте.
   3. safe_generate: вход-гардрейл → вызов модели → выход-гардрейл (PII).
-
-Как работать:
-  1. `python setup_practice.py` создаст рядом work.py (копию этого файла).
-  2. Пишите код в work.py (он игнорируется git).
-  3. Запуск:  uv run python 08-safety/ex1_guardrails/work.py
-  4. Сверка:  08-safety/ex1_guardrails/solution.py
 """
 
 from __future__ import annotations

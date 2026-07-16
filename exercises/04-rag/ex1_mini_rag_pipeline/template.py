@@ -12,12 +12,6 @@ top-K (cos_sim) → сборка промпта → генерация». Дем
   2. cos_sim: косинусная близость (раздел 02/04).
   3. retrieve: top-K ближайших чанков к запросу.
   4. answer: собрать промпт «отвечай только по контексту» и сгенерировать.
-
-Как работать:
-  1. `python setup_practice.py` создаст рядом work.py (копию этого файла).
-  2. Пишите код в work.py (он игнорируется git).
-  3. Запуск:  uv run python 04-rag/ex1_mini_rag_pipeline/work.py
-  4. Сверка:  04-rag/ex1_mini_rag_pipeline/solution.py
 """
 
 from __future__ import annotations

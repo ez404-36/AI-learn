@@ -11,12 +11,6 @@ nomic-embed-text). См. exercises/README.md, раздел 2.
   1. embed_text: получить вектор для строки через /v1/embeddings.
   2. cos_sim: косинусная близость (как в §3 теории).
   3. nearest: для запроса найти ближайшую по смыслу фразу из набора.
-
-Как работать:
-  1. `python setup_practice.py` создаст рядом work.py (копию этого файла).
-  2. Пишите код в work.py (он игнорируется git).
-  3. Запуск:  uv run python 02-llm/ex1_tokens_and_embeddings/work.py
-  4. Сверка:  02-llm/ex1_tokens_and_embeddings/solution.py
 """
 
 from __future__ import annotations

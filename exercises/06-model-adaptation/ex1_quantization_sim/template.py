@@ -9,12 +9,6 @@ float32-матрицу в int8 (симметричная per-tensor схема),
   1. quantize: float32 → int8 + масштаб (scale).
   2. dequantize: int8 + scale → float32 (приближённо).
   3. В main: посчитать коэффициент сжатия и ошибку.
-
-Как работать:
-  1. `python setup_practice.py` создаст рядом work.py (копию этого файла).
-  2. Пишите код в work.py (он игнорируется git).
-  3. Запуск:  uv run python 06-model-adaptation/ex1_quantization_sim/work.py
-  4. Сверка:  06-model-adaptation/ex1_quantization_sim/solution.py
 """
 
 from __future__ import annotations

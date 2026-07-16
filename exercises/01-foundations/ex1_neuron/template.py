@@ -8,12 +8,6 @@
   1. Реализовать `relu` и `neuron` (взвешенная сумма + ReLU).
   2. Собрать двуслойную сеть ДВАЖДЫ: с активацией и без неё, и показать,
      что без активации два слоя сворачиваются в один линейный.
-
-Как работать:
-  1. `python setup_practice.py` создаст рядом work.py (копию этого файла).
-  2. Пишите код в work.py (он игнорируется git).
-  3. Запуск:  uv run python 01-foundations/ex1_neuron/work.py
-  4. Сверка:  01-foundations/ex1_neuron/solution.py
 """
 
 from __future__ import annotations

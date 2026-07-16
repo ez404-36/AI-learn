@@ -14,12 +14,6 @@
 Задача:
   1. blocking_call: обычный вызов, вернуть (текст, total_sec).
   2. streaming_call: stream=True, вернуть (текст, ttft_sec, total_sec).
-
-Как работать:
-  1. `python setup_practice.py` создаст рядом work.py (копию этого файла).
-  2. Пишите код в work.py (он игнорируется git).
-  3. Запуск:  uv run python 07-inference/ex2_streaming_ttft/work.py
-  4. Сверка:  07-inference/ex2_streaming_ttft/solution.py
 """
 
 from __future__ import annotations

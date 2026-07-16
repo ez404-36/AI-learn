@@ -11,12 +11,6 @@
   1. LoRALinear.__init__: заморозить base, создать обучаемые A (r×in) и B (out×r).
   2. forward: base(x) + (x @ A^T) @ B^T * scaling.
   3. trainable_params: посчитать число обучаемых параметров.
-
-Как работать:
-  1. `python setup_practice.py` создаст рядом work.py (копию этого файла).
-  2. Пишите код в work.py (он игнорируется git).
-  3. Запуск:  uv run python 06-model-adaptation/ex2_lora_toy/work.py
-  4. Сверка:  06-model-adaptation/ex2_lora_toy/solution.py
 """
 
 from __future__ import annotations

@@ -12,12 +12,6 @@
 Задача:
   1. dpo_loss: реализовать формулу на PyTorch.
   2. Проверить: если policy сильнее предпочитает chosen, чем ref, loss мал.
-
-Как работать:
-  1. `python setup_practice.py` создаст рядом work.py (копию этого файла).
-  2. Пишите код в work.py (он игнорируется git).
-  3. Запуск:  uv run python 06-model-adaptation/ex3_dpo_loss/work.py
-  4. Сверка:  06-model-adaptation/ex3_dpo_loss/solution.py
 """
 
 from __future__ import annotations

@@ -15,12 +15,6 @@ Observation, который «крутит» рантайм агента, пок
 Задача:
   1. run_tool: выполнить действие вида 'calc[1703-1147]' / 'lookup[Москва]'.
   2. react: цикл, парсящий ответ модели, до строки 'Final: ...'.
-
-Как работать:
-  1. `python setup_practice.py` создаст рядом work.py (копию этого файла).
-  2. Пишите код в work.py (он игнорируется git).
-  3. Запуск:  uv run python 03-agents/ex2_react_loop/work.py
-  4. Сверка:  03-agents/ex2_react_loop/solution.py
 """
 
 from __future__ import annotations

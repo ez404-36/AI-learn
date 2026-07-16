@@ -13,12 +13,6 @@
 Задача:
   1. make_model: создать ChatOpenAI, направленный в LM Studio.
   2. summarize_chain: prompt_draft | model | ... | prompt_squeeze | model.
-
-Как работать:
-  1. `python setup_practice.py` создаст рядом work.py (копию этого файла).
-  2. Пишите код в work.py (он игнорируется git).
-  3. Запуск:  uv run python 05-pipelines-frameworks/ex1_langchain_chain/work.py
-  4. Сверка:  05-pipelines-frameworks/ex1_langchain_chain/solution.py
 """
 
 from __future__ import annotations

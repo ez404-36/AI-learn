@@ -167,6 +167,8 @@ for token in model.stream("Объясни, что такое инференс"):
 
 ---
 
+**Практика:** [упражнения к разделу 07 →](../exercises/07-inference/README.md)
+
 **Назад:** [← 06. Адаптация и сжатие моделей](../06-model-adaptation/README.md) &nbsp;|&nbsp; **Дальше:** [08. Безопасность и надёжность →](../08-safety/README.md)
 
 > Дальше: модель обучена, ужата и отвечает быстро — но можно ли ей доверять? В разделе 08 разберём guardrails, prompt injection, jailbreak и оценку качества (evals).

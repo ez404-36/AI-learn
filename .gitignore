@@ -6,3 +6,11 @@ AGENTS.md
 
 # Local docs (ideas/issues/plans/reviews) - not tracked
 docs/
+
+# Python / uv artifacts in exercises/
+__pycache__/
+*.pyc
+exercises/.venv/
+
+# Личные рабочие копии упражнений (создаются setup_practice.py, не трекаются)
+exercises/**/work.py

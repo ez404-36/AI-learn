@@ -11,6 +11,17 @@ nomic-embed-text). См. exercises/README.md, раздел 2.
   1. embed_text: получить вектор для строки через /v1/embeddings.
   2. cos_sim: косинусная близость (как в §3 теории).
   3. nearest: для запроса найти ближайшую по смыслу фразу из набора.
+
+Что нужно знать:
+    1. client.embeddings.create(model=model, input=text) — запрос к
+        эндпоинту /v1/embeddings, возвращает объект resp с полем .data
+        (список результатов по каждой входной строке); resp.data[0].embedding
+        — сам вектор (обычный list[float]); np.array(...) оборачивает его
+        в np.ndarray для арифметики (cos_sim).
+    2. np.dot(a, b) — скалярное произведение векторов (сумма a[i]*b[i]).
+    3. np.linalg.norm(v) — длина (норма) вектора: sqrt(сумма v[i]**2).
+    4. np.argmax(list_or_array) — индекс наибольшего элемента (не само
+        значение, а его позиция).
 """
 
 from __future__ import annotations
@@ -36,12 +47,7 @@ def embed_text(text: str, model: str = EMBED_MODEL) -> np.ndarray:
         model: имя embedding-модели в LM Studio.
 
     Returns:
-        Вектор embedding'а как np.ndarray (float): client.embeddings.create(
-        model=model, input=text) — запрос к эндпоинту /v1/embeddings,
-        возвращает объект resp с полем .data (список результатов по
-        каждой входной строке); resp.data[0].embedding — сам вектор
-        (обычный list[float]); np.array(...) оборачивает его в np.ndarray
-        для арифметики (cos_sim).
+        Вектор embedding'а как np.ndarray (float).
     """
     # ensure_server() — наш хелпер из common/lmstudio_client.py: возвращает
     # настроенный клиент openai.OpenAI и сразу проверяет, что LM Studio
@@ -59,9 +65,7 @@ def cos_sim(a: np.ndarray, b: np.ndarray) -> float:
         b: второй вектор.
 
     Returns:
-        cos_sim = dot(a, b) / (norm(a) * norm(b)), где np.dot(a, b) —
-        скалярное произведение векторов (сумма a[i]*b[i]), а
-        np.linalg.norm(v) — длина (норма) вектора: sqrt(сумма v[i]**2).
+        cos_sim = dot(a, b) / (norm(a) * norm(b)).
     """
     # TODO
     raise NotImplementedError
@@ -75,9 +79,7 @@ def nearest(query: str, phrases: list[str]) -> str:
         phrases: набор фраз-кандидатов.
 
     Returns:
-        Элемент phrases с наибольшим cos_sim к query. Заэмбедите query
-        и все phrases, верните argmax по cos_sim: np.argmax(list_or_array)
-        — индекс наибольшего элемента (не само значение, а его позиция).
+        Элемент phrases с наибольшим cos_sim к query.
     """
     # TODO
     raise NotImplementedError

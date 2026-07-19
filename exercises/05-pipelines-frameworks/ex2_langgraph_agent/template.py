@@ -15,6 +15,23 @@
   1. think: вызвать модель, записать её строку в state.
   2. route: условное ребро — вернуть "tool" или END.
   3. build_graph: собрать StateGraph с узлами и условным ребром.
+
+Что нужно знать:
+    1. SystemMessage/HumanMessage — обёртки LangChain над ролями сообщений
+        (аналог {"role": "system", ...} / {"role": "user", ...} из raw
+        OpenAI API): SystemMessage(text) — системная инструкция,
+        HumanMessage(text) — реплика пользователя. model.invoke([...])
+        возвращает объект сообщения с полем .content (текст ответа).
+    2. StateGraph(AgentState) — граф, состояние которого — словарь по
+        схеме AgentState; узлы получают state и возвращают обновлённый
+        state. START/END — специальные маркеры входа и выхода графа.
+    3. graph.add_node(name, fn) — зарегистрировать функцию fn как узел
+        графа с именем name. graph.add_edge(from, to) — обычное ребро.
+        graph.add_conditional_edges(name, route_fn, mapping) — условное
+        ребро: после узла name вызвать route_fn(state), и по результату
+        (ключу из mapping) перейти в соответствующий узел.
+        graph.compile() — собрать граф в исполняемое приложение с методом
+        .invoke(initial_state).
 """
 
 from __future__ import annotations
@@ -93,14 +110,7 @@ def think(state: AgentState) -> AgentState:
 
     Returns:
         Обновлённый state с новой строкой модели в state["last"].
-        model.invoke([SystemMessage(SYSTEM), HumanMessage(user)]) вернёт
-        объект сообщения с полем .content (текст ответа); положите
-        .content (первую строку) в state["last"].
     """
-    # SystemMessage/HumanMessage — обёртки LangChain над ролями сообщений
-    # (аналог {"role": "system", ...} / {"role": "user", ...} из raw OpenAI
-    # API): SystemMessage(text) — системная инструкция, HumanMessage(text)
-    # — реплика пользователя.
     from langchain_core.messages import HumanMessage, SystemMessage
 
     model = make_model()
@@ -148,15 +158,7 @@ def build_graph():
 
     Returns:
         Скомпилированное приложение LangGraph (объект с методом
-        .invoke(initial_state)). graph.add_node("think", think) —
-        зарегистрировать функцию think как узел графа с именем "think"
-        (аналогично для "tool"); graph.add_edge(START, "think") — обычное
-        ребро: откуда → куда; graph.add_conditional_edges("think", route,
-        {"tool": "tool", END: END}) — условное ребро: после узла "think"
-        вызвать route(state), и по её результату ("tool" или END) перейти
-        в соответствующий узел; graph.add_edge("tool", "think") — после
-        инструмента снова думать; graph.compile() — собрать граф в
-        исполняемое приложение.
+        .invoke(initial_state)).
     """
     # StateGraph(AgentState) — граф, состояние которого — словарь по схеме
     # AgentState; узлы получают state и возвращают обновлённый state.

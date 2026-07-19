@@ -46,7 +46,7 @@ def dequantize(q: np.ndarray, scale: float) -> np.ndarray:
         scale: масштаб, полученный от quantize.
 
     Returns:
-        q * scale — приближённое восстановление исходных весов.
+        Восстановленный float32-массив, приближённо равный исходным весам.
     """
     # TODO
     raise NotImplementedError

@@ -56,7 +56,8 @@ def exact_match(prediction: str, reference: str) -> bool:
         reference: эталонный ответ.
 
     Returns:
-        normalize(reference) in normalize(prediction).
+        True, если нормализованный эталонный ответ встречается в
+        нормализованном предсказании.
     """
     # TODO
     raise NotImplementedError
@@ -93,8 +94,8 @@ def llm_judge(question: str, reference: str, prediction: str) -> bool:
         prediction: ответ модели, который нужно оценить.
 
     Returns:
-        True/False. Соберите промпт-судью, попросите ответить строго
-        YES или NO, верните True, если в ответе есть YES.
+        True, если модель-судья считает prediction верным ответом на
+        question по смыслу (промпт-судья просит ответить строго YES/NO).
     """
     # TODO
     raise NotImplementedError
@@ -104,8 +105,7 @@ def run_evals() -> tuple[float, float]:
     """Прогнать датасет по обеим метрикам.
 
     Returns:
-        Кортеж (доля exact_match, доля judge=YES). Для каждого (q, ref):
-        получите ответ модели, посчитайте обе метрики.
+        Кортеж (доля exact_match, доля judge=YES) по всему датасету.
     """
     # TODO
     raise NotImplementedError

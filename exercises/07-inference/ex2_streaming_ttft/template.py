@@ -14,6 +14,14 @@
 Задача:
   1. blocking_call: обычный вызов, вернуть (текст, total_sec).
   2. streaming_call: stream=True, вернуть (текст, ttft_sec, total_sec).
+
+Что нужно знать:
+    1. С параметром stream=True chat.completions.create возвращает не
+        один ответ, а итерируемый объект: генерация приходит частями
+        (чанками) по мере готовности, а не целиком в конце.
+    2. В цикле `for chunk in stream:` каждый chunk.choices[0].delta — это
+        "приращение" ответа (может быть пустым на служебных чанках);
+        delta.content — очередной кусочек текста (или None).
 """
 
 from __future__ import annotations
@@ -57,15 +65,8 @@ def streaming_call(prompt: str) -> tuple[str, float, float]:
         prompt: текст запроса к модели.
 
     Returns:
-        Кортеж (текст, ttft_sec, total_sec). С параметром stream=True
-        chat.completions.create возвращает не один ответ, а итерируемый
-        объект: генерация приходит частями (чанками) по мере готовности,
-        а не целиком в конце. В цикле `for chunk in stream:` каждый
-        chunk.choices[0].delta — это "приращение" ответа (может быть
-        пустым на служебных чанках); delta.content — очередной кусочек
-        текста (или None). Зафиксируйте момент первого непустого
-        delta.content как ttft, соберите полный текст, по завершении
-        цикла — total.
+        Кортеж (текст, ttft_sec, total_sec), где ttft — время до первого
+        непустого чанка контента.
     """
     client = get_client()
     model = first_model_id(client)

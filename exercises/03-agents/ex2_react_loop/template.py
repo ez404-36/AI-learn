@@ -15,6 +15,13 @@ Observation, который «крутит» рантайм агента, пок
 Задача:
   1. run_tool: выполнить действие вида 'calc[1703-1147]' / 'lookup[Москва]'.
   2. react: цикл, парсящий ответ модели, до строки 'Final: ...'.
+
+Что нужно знать:
+    1. Модель по SYSTEM_PROMPT выводит РОВНО одну строку за шаг с одним из
+        префиксов: "Thought: ..." — промежуточное рассуждение (добавляется
+        в контекст и цикл продолжается), "Action: name[arg]" — запрос на
+        выполнение инструмента (нужно вызвать run_tool и вернуть результат
+        как Observation), "Final: ..." — финальный ответ, завершающий цикл.
 """
 
 from __future__ import annotations
@@ -54,9 +61,7 @@ def run_tool(action: str) -> str:
         action: строка вида 'calc[1+2]' или 'lookup[Москва]'.
 
     Returns:
-        Текст-наблюдение (Observation): распарсить name и arg из строки;
-        для 'lookup' искать в FACTS (по нижнему регистру), для 'calc' —
-        посчитать арифметику.
+        Текст-наблюдение (Observation) — результат lookup или calc.
     """
     # TODO
     raise NotImplementedError
@@ -70,12 +75,7 @@ def react(question: str, max_steps: int = 6) -> str:
         max_steps: максимум шагов цикла до принудительной остановки.
 
     Returns:
-        Финальный ответ (то, что после 'Final:'). До max_steps раз:
-          - вызвать модель (temperature=0), взять первую строку ответа;
-          - если строка начинается с 'Final:' → вернуть остаток;
-          - если 'Action:' → выполнить run_tool, добавить в messages ответ
-            ассистента и Observation как user-сообщение;
-          - если 'Thought:' → просто добавить в контекст и продолжить.
+        Финальный ответ (текст после 'Final:').
     """
     client = get_client()
     model = first_model_id(client)

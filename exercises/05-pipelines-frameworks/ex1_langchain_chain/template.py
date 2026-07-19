@@ -13,6 +13,20 @@
 Задача:
   1. make_model: создать ChatOpenAI, направленный в LM Studio.
   2. summarize_chain: prompt_draft | model | ... | prompt_squeeze | model.
+
+Что нужно знать:
+    1. ChatOpenAI(base_url=..., api_key=..., model=..., temperature=...) —
+        конструктор обёртки LangChain над OpenAI-совместимым чат-API;
+        base_url направляет её на LM Studio вместо облачного OpenAI,
+        api_key — заглушка (LM Studio не проверяет ключ).
+    2. Оператор `|` соединяет шаги пайплайна: выход слева становится
+        входом справа (как в Unix-пайпах).
+    3. ChatPromptTemplate.from_template("... {var} ...") — шаблон
+        промпта: {var} подставляется при вызове .invoke({"var": значение}).
+    4. StrOutputParser() — достаёт из ответа модели обычную строку (без
+        него результат остался бы объектом сообщения с доп. полями).
+    5. .invoke(входной_словарь) прогоняет его через всю цепочку и
+        возвращает финальный результат.
 """
 
 from __future__ import annotations
@@ -32,11 +46,7 @@ def make_model():
     """Создать ChatOpenAI, направленный в LM Studio.
 
     Returns:
-        ChatOpenAI(base_url=BASE_URL, api_key="lm-studio", model=model_id,
-        temperature=0). ChatOpenAI — обёртка LangChain над
-        OpenAI-совместимым чат-API; ведёт себя как любая LangChain-модель
-        (можно соединять оператором | ), но под капотом ходит туда же,
-        куда наш openai.OpenAI — в LM Studio.
+        Модель ChatOpenAI, направленная на LM Studio, temperature=0.
     """
     from langchain_openai import ChatOpenAI
 
@@ -52,17 +62,8 @@ def run(topic: str) -> str:
         topic: тема, которую нужно объяснить и сжать.
 
     Returns:
-        Итоговое сжатое предложение. Соберите цепочку через оператор |
-        (соединяет шаги пайплайна: выход слева становится входом справа,
-        как в Unix-пайпах):
-          draft = ChatPromptTemplate.from_template("Объясни {topic} в 3
-                  предложениях") | model | StrOutputParser()
-          squeeze = ChatPromptTemplate.from_template(
-                    "Сожми это в ОДНО предложение:\n{draft}") | model |
-                    StrOutputParser()
-        Затем вызовите draft.invoke({"topic": topic}), потом
-        squeeze.invoke({"draft": <результат draft>}) — .invoke() прогоняет
-        входной словарь через всю цепочку и возвращает финальный результат.
+        Итоговое сжатое предложение — результат прохода темы через
+        двухшаговую цепочку (черновик → сжатие).
     """
     # StrOutputParser — достаёт из ответа модели обычную строку (без этого
     # результат остался бы объектом сообщения с доп. полями).

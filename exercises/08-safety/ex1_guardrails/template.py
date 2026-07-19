@@ -73,9 +73,8 @@ def safe_generate(user_input: str) -> str:
         user_input: реплика пользователя.
 
     Returns:
-        REFUSAL, если input_blocked(user_input); иначе ответ модели с
-        применённым redact_pii. Вызовите модель, к ответу примените
-        redact_pii, верните результат.
+        REFUSAL, если input_blocked(user_input); иначе очищенный от PII
+        ответ модели.
     """
     if input_blocked(user_input):
         return REFUSAL

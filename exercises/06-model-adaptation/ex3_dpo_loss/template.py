@@ -15,6 +15,11 @@
 Задача:
   1. dpo_loss: реализовать формулу на PyTorch.
   2. Проверить: если policy сильнее предпочитает chosen, чем ref, loss мал.
+
+Что нужно знать:
+    1. F.logsigmoid(x) — численно устойчивый log(sigmoid(x)) (эквивалент
+        torch.log(torch.sigmoid(x)), но без потери точности при больших
+        |x|), применяется поэлементно к тензору.
 """
 
 from __future__ import annotations
@@ -42,16 +47,8 @@ def dpo_loss(
             силу штрафа за отклонение от ref-модели).
 
     Returns:
-        Тензор-скаляр (0-мерный) со средним DPO loss по батчу:
-          pi_logratios  = lp_chosen - lp_rejected
-          ref_logratios = ref_chosen - ref_rejected
-          logits = pi_logratios - ref_logratios
-          loss = -F.logsigmoid(beta * logits) — F.logsigmoid(x) численно
-              устойчивый log(sigmoid(x)) (эквивалент
-              torch.log(torch.sigmoid(x)), но без потери точности при
-              больших |x|), применяется поэлементно к тензору.
-          return loss.mean() — среднее по всем элементам тензора (как
-              np.mean), возвращает тензор-скаляр, не Python-число.
+        Тензор-скаляр (0-мерный) со средним DPO loss по батчу (см. формулу
+        в докстринге модуля).
     """
     # TODO
     raise NotImplementedError

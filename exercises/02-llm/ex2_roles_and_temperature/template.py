@@ -9,6 +9,15 @@
 Задача:
   1. ask: отправить messages с заданной temperature, вернуть текст ответа.
   2. В main: сравнить разброс при temperature=0 и temperature=1.
+
+Что нужно знать:
+    1. messages — список реплик диалога по ролям: "system" — инструкция
+        модели (как себя вести), "user" — реплика пользователя,
+        "assistant" — прошлый ответ модели (для истории).
+    2. client.chat.completions.create(model=model, messages=[...],
+        temperature=temperature) возвращает объект с полем .choices —
+        список альтернатив ответа (обычно из одного элемента);
+        choices[0].message.content — текст первого варианта ответа.
 """
 
 from __future__ import annotations
@@ -35,12 +44,7 @@ def ask(user_text: str, temperature: float) -> str:
             детерминирован, 1 — заметный разброс формулировок.
 
     Returns:
-        client.chat.completions.create(model=model, messages=[...],
-        temperature=temperature).choices[0].message.content — текст
-        первого варианта ответа (choices — список альтернатив, обычно
-        из одного элемента). messages — список реплик диалога по ролям:
-        "system" — инструкция модели (как себя вести), "user" — реплика
-        пользователя, "assistant" — прошлый ответ модели (для истории).
+        Текст ответа модели (первый вариант из choices).
     """
     # get_client() — настроенный клиент openai.OpenAI, направленный на
     # локальный сервер LM Studio (не проверяет доступность сразу).

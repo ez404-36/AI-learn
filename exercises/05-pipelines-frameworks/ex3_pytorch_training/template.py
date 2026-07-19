@@ -10,6 +10,22 @@
   1. build: создать модель, loss-функцию и оптимизатор.
   2. train_step: forward → loss → backward → step → zero_grad (§6 теории).
   3. train: прогнать несколько эпох, вернуть выученные w, b.
+
+Что нужно знать:
+    1. nn.MSELoss() — готовый объект функции потерь (среднее квадратов
+        ошибки), вызывается как loss_fn(pred, target).
+    2. torch.optim.SGD(model.parameters(), lr=0.1) — оптимизатор
+        градиентного спуска; model.parameters() — все обучаемые тензоры
+        модели (веса, bias), lr — скорость обучения.
+    3. model(x) вызывает forward, возвращает предсказание (тензор с
+        историей операций для последующего backward).
+    4. loss.backward() — autograd: считает градиенты loss по ВСЕМ
+        параметрам модели (заполняет .grad у каждого параметра из
+        model.parameters()).
+    5. optimizer.step() — обновляет веса модели на основе .grad (для SGD:
+        w -= lr * w.grad). optimizer.zero_grad() — обнуляет .grad перед
+        следующим шагом (иначе градиенты накапливаются).
+    6. .item() достаёт из тензора-скаляра обычное Python-число (float).
 """
 
 from __future__ import annotations
@@ -23,11 +39,6 @@ def build() -> tuple[nn.Module, nn.Module, torch.optim.Optimizer]:
 
     Returns:
         Кортеж (модель Linear(1,1), MSELoss, SGD-оптимизатор).
-        nn.MSELoss() — готовый объект функции потерь (среднее квадратов
-        ошибки), вызывается как loss_fn(pred, target).
-        torch.optim.SGD(model.parameters(), lr=0.1) — оптимизатор
-        градиентного спуска; model.parameters() — все обучаемые тензоры
-        модели (веса, bias), lr — скорость обучения.
     """
     # nn.Linear(in_features, out_features) — готовый линейный слой PyTorch
     # y = W @ x + b; веса W и b создаются автоматически со requires_grad=True
@@ -54,23 +65,8 @@ def train_step(
         y: истинные значения батча.
 
     Returns:
-        Значение loss (float) за этот шаг. Пять строк из §6 теории:
-          pred = model(x)         — forward pass: model(x) вызывает
-                                    forward, возвращает предсказание
-                                    (тензор с историей операций для
-                                    последующего backward).
-          loss = loss_fn(pred, y) — посчитать ошибку между pred и
-                                    истинным y.
-          loss.backward()         — autograd: посчитать градиенты loss по
-                                    ВСЕМ параметрам модели (заполняет
-                                    .grad у каждого параметра из
-                                    model.parameters()).
-          optimizer.step()        — обновить веса модели на основе .grad
-                                    (для SGD: w -= lr * w.grad).
-          optimizer.zero_grad()   — обнулить .grad перед следующим шагом
-                                    (иначе градиенты будут накапливаться).
-          return loss.item()      — .item() достаёт из тензора-скаляра
-                                    обычное Python-число (float).
+        Значение loss (float) за этот шаг обучения (forward → loss →
+        backward → step → zero_grad, см. §6 теории).
     """
     # TODO
     raise NotImplementedError

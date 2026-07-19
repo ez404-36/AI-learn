@@ -58,8 +58,9 @@ class LoRALinear(nn.Module):
         #       в module.parameters(), requires_grad=True по умолчанию).
         #   torch.randn(rows, cols) — тензор случайных чисел (для A).
         #   torch.zeros(rows, cols) — тензор нулей (для B, стандарт LoRA).
-        #   создать self.A = nn.Parameter(torch.randn(rank, in_features) * 0.01)
-        #   создать self.B = nn.Parameter(torch.zeros(out_features, rank))
+        #   Создайте обучаемые параметры self.A формы (rank, in_features)
+        #   — случайная инициализация, умноженная на 0.01, и self.B формы
+        #   (out_features, rank) — нули (стандарт LoRA).
         raise NotImplementedError
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -69,10 +70,8 @@ class LoRALinear(nn.Module):
             x: входной тензор формы (batch, in_features).
 
         Returns:
-            base(x) + (x @ A.T) @ B.T — выход базового слоя плюс LoRA-
-            добавка. @ — матричное умножение тензоров (аналог np.dot для
-            2D). .T — транспонирование тензора (меняет местами оси/строки-
-            столбцы).
+            База + низкоранговая LoRA-добавка (см. формулу ΔW = B@A в
+            докстринге модуля).
         """
         # TODO
         raise NotImplementedError

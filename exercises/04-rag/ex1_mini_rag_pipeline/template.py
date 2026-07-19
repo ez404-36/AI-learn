@@ -78,7 +78,7 @@ def retrieve(question: str, docs: list[str], top_k: int = 2) -> list[str]:
 
     Returns:
         Список из top_k документов, отсортированных по убыванию cos_sim
-        к вопросу. Заэмбедите вопрос и docs, отсортируйте по cos_sim.
+        к вопросу.
     """
     # TODO
     raise NotImplementedError
@@ -92,9 +92,8 @@ def answer(question: str, context_chunks: list[str]) -> str:
         context_chunks: релевантные чанки контекста (из retrieve).
 
     Returns:
-        Текстовый ответ модели. Соберите промпт с инструкцией «используй
-        только контекст ниже» (см. §5 теории) и вызовите
-        chat.completions.create.
+        Текстовый ответ модели, использующий только переданный контекст
+        (см. §5 теории).
     """
     client = get_client()
     model = first_model_id(client)

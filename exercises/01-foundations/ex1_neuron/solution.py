@@ -9,6 +9,10 @@
 from __future__ import annotations
 
 
+def linear_unit(inputs: list[float], weights: list[float], bias: float) -> float:
+    return sum(x * w for x, w in zip(inputs, weights)) + bias
+
+
 def relu(z: float) -> float:
     return z if z > 0 else 0
 
@@ -16,10 +20,6 @@ def relu(z: float) -> float:
 def neuron(inputs: list[float], weights: list[float], bias: float) -> float:
     z = sum(x * w for x, w in zip(inputs, weights)) + bias
     return relu(z)
-
-
-def linear_unit(inputs: list[float], weights: list[float], bias: float) -> float:
-    return sum(x * w for x, w in zip(inputs, weights)) + bias
 
 
 def two_linear_layers(x: float) -> float:

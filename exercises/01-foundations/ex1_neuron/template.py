@@ -15,8 +15,23 @@
 from __future__ import annotations
 
 
+def linear_unit(inputs: list[float], weights: list[float], bias: float) -> float:
+    """Чистая линейная операция.
+
+    Args:
+        inputs: входные значения x_1..x_n.
+        weights: веса w_1..w_n.
+        bias: свободное слагаемое (смещение).
+
+    Returns:
+        Взвешенная сумма: sum(x_i * w_i) + bias.
+    """
+    # TODO: реализуйте
+    raise NotImplementedError
+
+
 def relu(z: float) -> float:
-    """Функция активации ReLU (Rectified Linear Unit).
+    """Функция активации ReLU.
 
     Args:
         z: взвешенная сумма входов нейрона (до активации).
@@ -24,7 +39,7 @@ def relu(z: float) -> float:
     Returns:
         z, если z > 0, иначе 0.
     """
-    # TODO: реализуйте ReLU (см. §3 теории)
+    # TODO: реализуйте (см. §3 теории)
     raise NotImplementedError
 
 
@@ -40,22 +55,7 @@ def neuron(inputs: list[float], weights: list[float], bias: float) -> float:
     Returns:
         relu(sum(x_i * w_i) + bias).
     """
-    # TODO: посчитайте z = sum(x*w) + bias и верните relu(z)
-    raise NotImplementedError
-
-
-def linear_unit(inputs: list[float], weights: list[float], bias: float) -> float:
-    """Тот же нейрон, но БЕЗ активации — чистая линейная операция.
-
-    Args:
-        inputs: входные значения x_1..x_n.
-        weights: веса w_1..w_n.
-        bias: свободное слагаемое (смещение).
-
-    Returns:
-        sum(x_i * w_i) + bias (без ReLU).
-    """
-    # TODO: верните взвешенную сумму без relu
+    # TODO
     raise NotImplementedError
 
 
